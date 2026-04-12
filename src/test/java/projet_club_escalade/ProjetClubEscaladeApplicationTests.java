@@ -1,4 +1,4 @@
-package com.example.projet_club_escalade;
+package projet_club_escalade;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
