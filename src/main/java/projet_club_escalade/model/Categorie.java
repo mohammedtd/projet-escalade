@@ -1,4 +1,4 @@
-package com.example.projet_club_escalade.model;
+package projet_club_escalade.model;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
