@@ -2,12 +2,19 @@ package projet_club_escalade.dao;
 
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import projet_club_escalade.model.Categorie;
 import projet_club_escalade.repository.CategorieRepository;
 
-public class CategorieDAOImpl implements CategorieDAO{
+@Repository
+public class CategorieDAOImpl implements CategorieDAO {
     
-    private CategorieRepository categorieRepository;
+    private final CategorieRepository categorieRepository;
+
+    public CategorieDAOImpl(CategorieRepository categorieRepository) {
+        this.categorieRepository = categorieRepository;
+    }
 
     @Override
     public List<Categorie> findAll() {

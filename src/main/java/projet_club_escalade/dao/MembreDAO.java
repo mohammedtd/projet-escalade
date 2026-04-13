@@ -12,4 +12,6 @@ public interface MembreDAO {
 
     Membre save(Membre membre);
 
+    void delete(Integer id);
+
 }

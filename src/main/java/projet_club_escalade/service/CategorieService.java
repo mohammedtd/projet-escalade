@@ -4,36 +4,36 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import projet_club_escalade.dao.CategorieDAOImpl;
+import projet_club_escalade.dao.CategorieDAO;
 import projet_club_escalade.model.Categorie;
 
 @Service
 public class CategorieService {
     
-    private CategorieDAOImpl categorieDAOImpl;
+    private final CategorieDAO categorieDAO;
 
-    public CategorieService(CategorieDAOImpl categorieDAOImpl) {
-        this.categorieDAOImpl = categorieDAOImpl;
+    public CategorieService(CategorieDAO categorieDAO) {
+        this.categorieDAO = categorieDAO;
     }
 
     // Obtenir la liste des catégories
     public List<Categorie> getAllCategories () {
-        return categorieDAOImpl.findAll();
+        return categorieDAO.findAll();
     }
 
     // Obtenir une catégorie
     public Categorie getCategorieById (Integer id) {
-        return categorieDAOImpl.findById(id);
+        return categorieDAO.findById(id);
     }
 
     // Créer une catégorie
     public Categorie createCategorie(Categorie categorie) {
-        return categorieDAOImpl.save(categorie);
+        return categorieDAO.save(categorie);
     }
 
     //Supprimer une catégorie
     public void delete(Integer id) {
-        categorieDAOImpl.delete(id);
+        categorieDAO.delete(id);
     }
 
 }

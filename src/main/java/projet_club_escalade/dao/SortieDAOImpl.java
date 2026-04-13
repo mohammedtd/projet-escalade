@@ -9,6 +9,7 @@ import projet_club_escalade.repository.SortieRepository;
 
 @Repository
 public class SortieDAOImpl implements SortieDAO  {
+    
     private final SortieRepository sortieRepository;
 
     public SortieDAOImpl(SortieRepository sortieRepository) {

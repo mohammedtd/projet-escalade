@@ -4,31 +4,36 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import projet_club_escalade.dao.MembreDAOImpl;
+import projet_club_escalade.dao.MembreDAO;
 import projet_club_escalade.model.Membre;
 
 @Service
 public class MembreService {
     
-    private MembreDAOImpl membreDAOImpl;
+    private final MembreDAO membreDAO;
 
-    public MembreService(MembreDAOImpl membreDAOImpl) {
-        this.membreDAOImpl = membreDAOImpl;
+    public MembreService(MembreDAO membreDAO) {
+        this.membreDAO = membreDAO;
     }
 
     // Obtenir la liste des membres
     public List<Membre> getAllMembres () {
-        return membreDAOImpl.findAll();
+        return membreDAO.findAll();
     }
 
     // Obtenir un membre
     public Membre getMembreById (Integer id) {
-        return membreDAOImpl.findById(id);
+        return membreDAO.findById(id);
     }
 
     // Créer / Modifier un membre
     public Membre saveMembre(Membre membre) {
-        return membreDAOImpl.save(membre);
+        return membreDAO.save(membre);
+    }
+
+    // Supprimer un membre
+    public void delete(Integer id) {
+        membreDAO.delete(id);
     }
 
 }
