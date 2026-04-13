@@ -7,6 +7,8 @@ import projet_club_escalade.model.Sortie;
 
 public interface SortieRepository extends JpaRepository<Sortie, Integer> {
 
+    // Chercher les sorties en fonction de critères
+    
     List<Sortie> findByNomSortieContaining(String motCle);
 
     List<Sortie> findByLieuContaining(String lieu);
