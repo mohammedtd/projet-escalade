@@ -8,11 +8,11 @@ import projet_club_escalade.model.Sortie;
 import projet_club_escalade.repository.SortieRepository;
 
 @Repository
-public class SortieDAOImpl implements SortieDAO  {
+public class SortieDAOImplementation implements SortieDAO  {
     
     private final SortieRepository sortieRepository;
 
-    public SortieDAOImpl(SortieRepository sortieRepository) {
+    public SortieDAOImplementation(SortieRepository sortieRepository) {
         this.sortieRepository = sortieRepository;
     }
 

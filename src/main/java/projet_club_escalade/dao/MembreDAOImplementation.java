@@ -8,11 +8,11 @@ import projet_club_escalade.model.Membre;
 import projet_club_escalade.repository.MembreRepository;
 
 @Repository
-public class MembreDAOImpl implements MembreDAO {
+public class MembreDAOImplementation implements MembreDAO {
 
     private MembreRepository membreRepository;
 
-    public MembreDAOImpl(MembreRepository membreRepository) {
+    public MembreDAOImplementation(MembreRepository membreRepository) {
         this.membreRepository = membreRepository;
     }
 

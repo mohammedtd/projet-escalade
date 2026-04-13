@@ -8,11 +8,11 @@ import projet_club_escalade.model.Categorie;
 import projet_club_escalade.repository.CategorieRepository;
 
 @Repository
-public class CategorieDAOImpl implements CategorieDAO {
+public class CategorieDAOImplementation implements CategorieDAO {
     
     private final CategorieRepository categorieRepository;
 
-    public CategorieDAOImpl(CategorieRepository categorieRepository) {
+    public CategorieDAOImplementation(CategorieRepository categorieRepository) {
         this.categorieRepository = categorieRepository;
     }
 
