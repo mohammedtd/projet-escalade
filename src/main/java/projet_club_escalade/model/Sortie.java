@@ -22,19 +22,31 @@ public class Sortie {
     
     @NotEmpty
     private String nomSortie;
-
+    
     private LocalDate dateSortie;
 
-    private String Lieu;
+    private String description;
+
+    private String siteWeb;
+
+    private String lieu;
+    
 
 
-    // Relation avec Categorie
     @ManyToOne
     @JoinColumn(name = "categorie_id")
     private Categorie categorie;
 
+    @ManyToOne
+    @JoinColumn(name = "membre_createur_id")
+    private Membre membreCreateur;
+
     @ManyToMany
-    @JoinTable(name = "sortie_membres")
+    @JoinTable(
+        name = "sortie_membres",
+        joinColumns = @JoinColumn(name = "sortie_id"),
+        inverseJoinColumns = @JoinColumn(name = "membre_id")
+    )
     private List<Membre> membres;
 
     public Sortie() {
@@ -65,11 +77,11 @@ public class Sortie {
     }
 
     public String getLieu() {
-        return Lieu;
+        return lieu;
     }
 
     public void setLieu(String lieu) {
-        Lieu = lieu;
+        this.lieu = lieu;
     }
 
     public Categorie getCategorie() {
@@ -89,5 +101,27 @@ public class Sortie {
     }
     
 
+    public String getDescription() {
+        return description;
+    }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getSiteWeb() {
+        return siteWeb;
+    }
+
+    public void setSiteWeb(String siteWeb) {
+        this.siteWeb = siteWeb;
+    }
+
+    public Membre getMembreCreateur() {
+        return membreCreateur;
+    }
+
+    public void setMembreCreateur(Membre membreCreateur) {
+        this.membreCreateur = membreCreateur;
+    }
 }

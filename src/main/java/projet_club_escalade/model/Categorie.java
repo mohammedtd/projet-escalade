@@ -1,7 +1,8 @@
 package projet_club_escalade.model;
 import java.util.List;
 
-import jakarta.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -20,8 +21,9 @@ public class Categorie {
     @NotEmpty
     private String nomCategorie;
 
-
-    @OneToMany(mappedBy = "categorie", cascade = CascadeType.ALL)
+    
+    @OneToMany(mappedBy = "categorie")
+    @JsonIgnore
     private List<Sortie> sorties;
 
 

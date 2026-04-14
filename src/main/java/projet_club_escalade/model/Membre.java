@@ -2,11 +2,13 @@ package projet_club_escalade.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
@@ -14,7 +16,7 @@ public class Membre {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer nomID;
+    private Integer membreID;
     
     @NotEmpty
     private String nom;
@@ -24,19 +26,19 @@ public class Membre {
 
     private String email;
 
-    // Relation avec Sortie
-    @ManyToMany(mappedBy = "membres")
+    @OneToMany(mappedBy = "membreCreateur")
+    @JsonIgnore
     private List<Sortie> sorties;
 
     public Membre() {
     }
 
-    public Integer getNomID() {
-        return nomID;
+    public Integer getMembreID() {
+        return membreID;
     }
 
-    public void setNomID(Integer nomID) {
-        this.nomID = nomID;
+    public void setMembreID(Integer membreID) {
+        this.membreID = membreID;
     }
 
     public String getNom() {

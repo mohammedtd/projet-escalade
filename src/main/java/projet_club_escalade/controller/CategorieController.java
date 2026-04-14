@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RestController
 @RequestMapping("/categories")
 public class CategorieController {
-    private CategorieService categorieService;
+    private final CategorieService categorieService;
 
     public CategorieController(CategorieService categorieService) {
         this.categorieService = categorieService;
