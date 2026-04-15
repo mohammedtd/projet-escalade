@@ -1,5 +1,6 @@
 package dao;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -8,11 +9,11 @@ import model.Sortie;
 import repository.SortieRepository;
 
 @Repository
-public class SortieDAOImplementation implements SortieDAO  {
+public class JpaSortieDao implements SortieDAO  {
     
     private final SortieRepository sortieRepository;
 
-    public SortieDAOImplementation(SortieRepository sortieRepository) {
+    public JpaSortieDao(SortieRepository sortieRepository) {
         this.sortieRepository = sortieRepository;
     }
 
@@ -22,7 +23,7 @@ public class SortieDAOImplementation implements SortieDAO  {
     }
 
     @Override
-    public Sortie findById(Integer id) {
+    public Sortie findById(long id) {
         return sortieRepository.findById(id).orElse(null);
     }
 
@@ -32,22 +33,13 @@ public class SortieDAOImplementation implements SortieDAO  {
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(long id) {
         sortieRepository.deleteById(id);
     }
 
     @Override
-    public List<Sortie> searchByNom(String motCle) {
-        return sortieRepository.findByNomSortieContaining(motCle);
+    public List<Sortie> search(String nom, Integer categorieId, Long createurId, LocalDate dateSortie) {
+        return sortieRepository.search(nom, categorieId, createurId, dateSortie);
     }
 
-    @Override
-    public List<Sortie> searchByLieu(String lieu) {
-        return sortieRepository.findByLieuContaining(lieu);
-    }
-
-    @Override
-    public List<Sortie> searchByCategorie(Integer categorieId) {
-        return sortieRepository.findByCategorie_CategorieID(categorieId);
-    }
 }
