@@ -1,17 +1,20 @@
 package repository;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import model.Sortie;
+import org.springframework.data.jpa.repository.Query;
 
-public interface SortieRepository extends JpaRepository<Sortie, Integer> {
+public interface SortieRepository extends JpaRepository<Sortie, Long> {
+    @Query("""
+    SELECT s FROM Sortie s
+    WHERE (:nom IS NULL OR s.nomSortie LIKE CONCAT('%', :nom, '%'))
+    AND (:categorieId IS NULL OR s.categorie.categorieID = :categorieId)
+    AND (:createurId IS NULL OR s.createur.membreID = :createurId)
+    AND (:dateSortie IS NULL OR s.dateSortie = :dateSortie)
+    """)
+    List<Sortie> search(String nom, Integer categorieId, Long createurId, LocalDate dateSortie);
 
-    // Chercher les sorties en fonction de critères
-    
-    List<Sortie> findByNomSortieContaining(String motCle);
-
-    List<Sortie> findByLieuContaining(String lieu);
-
-    List<Sortie> findByCategorie_CategorieID(Integer categorieID);
 }
