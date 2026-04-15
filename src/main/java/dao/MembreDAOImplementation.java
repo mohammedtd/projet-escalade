@@ -1,11 +1,11 @@
-package projet_club_escalade.dao;
+package dao;
 
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import projet_club_escalade.model.Membre;
-import projet_club_escalade.repository.MembreRepository;
+import model.Membre;
+import repository.MembreRepository;
 
 @Repository
 public class MembreDAOImplementation implements MembreDAO {

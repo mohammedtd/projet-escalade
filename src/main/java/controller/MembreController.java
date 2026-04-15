@@ -1,4 +1,4 @@
-package projet_club_escalade.controller;
+package controller;
 
 import java.util.List;
 
@@ -9,8 +9,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import projet_club_escalade.model.Membre;
-import projet_club_escalade.service.MembreService;
+import model.Membre;
+import service.MembreService;
 
 @RestController
 @RequestMapping("/membres")

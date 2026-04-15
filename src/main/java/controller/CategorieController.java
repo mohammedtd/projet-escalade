@@ -1,9 +1,9 @@
-package projet_club_escalade.controller;
+package controller;
 
 import org.springframework.web.bind.annotation.RestController;
 
-import projet_club_escalade.model.Categorie;
-import projet_club_escalade.service.CategorieService;
+import model.Categorie;
+import service.CategorieService;
 
 import java.util.List;
 

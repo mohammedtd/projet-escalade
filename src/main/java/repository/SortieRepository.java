@@ -1,9 +1,9 @@
-package projet_club_escalade.repository;
+package repository;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import projet_club_escalade.model.Sortie;
+import model.Sortie;
 
 public interface SortieRepository extends JpaRepository<Sortie, Integer> {
 

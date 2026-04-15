@@ -1,8 +1,8 @@
-package projet_club_escalade.dao;
+package dao;
 
 import java.util.List;
 
-import projet_club_escalade.model.Membre;
+import model.Membre;
 
 public interface MembreDAO {    
     

@@ -1,11 +1,11 @@
-package projet_club_escalade.service;
+package service;
 
 import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import projet_club_escalade.dao.CategorieDAO;
-import projet_club_escalade.model.Categorie;
+import dao.CategorieDAO;
+import model.Categorie;
 
 @Service
 public class CategorieService {

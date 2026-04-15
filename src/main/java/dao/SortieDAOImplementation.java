@@ -1,11 +1,11 @@
-package projet_club_escalade.dao;
+package dao;
 
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import projet_club_escalade.model.Sortie;
-import projet_club_escalade.repository.SortieRepository;
+import model.Sortie;
+import repository.SortieRepository;
 
 @Repository
 public class SortieDAOImplementation implements SortieDAO  {

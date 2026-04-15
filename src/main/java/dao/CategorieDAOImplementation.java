@@ -1,11 +1,11 @@
-package projet_club_escalade.dao;
+package dao;
 
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import projet_club_escalade.model.Categorie;
-import projet_club_escalade.repository.CategorieRepository;
+import model.Categorie;
+import repository.CategorieRepository;
 
 @Repository
 public class CategorieDAOImplementation implements CategorieDAO {

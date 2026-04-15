@@ -1,4 +1,4 @@
-package projet_club_escalade.model;
+package model;
 
 import java.util.List;
 
