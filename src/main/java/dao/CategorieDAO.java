@@ -8,10 +8,12 @@ public interface CategorieDAO {
     
     List<Categorie> findAll();
 
-    Categorie findById(Integer id);
+    Categorie findById(long id);
 
     Categorie save(Categorie categorie);
 
-    void delete(Integer id);
+    void deleteById(long id);
+
+    Categorie findByIdWithSorties(long id);
     
 }
