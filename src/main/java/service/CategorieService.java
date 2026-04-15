@@ -2,6 +2,7 @@ package service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dao.CategorieDAO;
@@ -9,8 +10,10 @@ import model.Categorie;
 
 @Service
 public class CategorieService {
+
+    @Autowired
+    private CategorieDAO categorieDAO;
     
-    private final CategorieDAO categorieDAO;
 
     public CategorieService(CategorieDAO categorieDAO) {
         this.categorieDAO = categorieDAO;
@@ -33,7 +36,11 @@ public class CategorieService {
 
     //Supprimer une catégorie
     public void delete(Integer id) {
-        categorieDAO.delete(id);
+        categorieDAO.deleteById(id);
+    }
+
+    public Categorie findByIdWithSorties(long id) {
+        return categorieDAO.findByIdWithSorties(id);
     }
 
 }

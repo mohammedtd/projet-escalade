@@ -1,7 +1,9 @@
 package service;
 
+import java.time.LocalDate;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import dao.SortieDAO;
@@ -10,7 +12,8 @@ import model.Sortie;
 @Service
 public class SortieService {
 
-    private final SortieDAO sortieDAO;
+    @Autowired
+    private SortieDAO sortieDAO;
 
     public SortieService(SortieDAO sortieDAO) {
         this.sortieDAO = sortieDAO;
@@ -36,16 +39,7 @@ public class SortieService {
         sortieDAO.delete(id);
     }
 
-    // Chercher des sorties en fonction de critères
-    public List<Sortie> searchByNom(String motCle) {
-        return sortieDAO.searchByNom(motCle);
-    }
-
-    public List<Sortie> searchByLieu(String lieu) {
-        return sortieDAO.searchByLieu(lieu);
-    }
-
-    public List<Sortie> searchByCategorie(Integer categorieId) {
-        return sortieDAO.searchByCategorie(categorieId);
+    public List<Sortie> search(String nom, Integer categorieId, Long createurId, LocalDate dateSortie) {
+        return sortieDAO.search(nom, categorieId, createurId, dateSortie);
     }
 }
