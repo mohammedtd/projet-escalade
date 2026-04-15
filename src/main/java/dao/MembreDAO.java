@@ -8,10 +8,13 @@ public interface MembreDAO {
     
     List<Membre> findAll();
 
-    Membre findById(Integer id);
+    Membre findById(long id);
 
     Membre save(Membre membre);
 
-    void delete(Integer id);
+    void delete(long id);
+
+    Membre findByIdWithSorties(long id);
+
 
 }
