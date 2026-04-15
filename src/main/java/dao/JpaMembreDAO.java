@@ -8,11 +8,11 @@ import model.Membre;
 import repository.MembreRepository;
 
 @Repository
-public class MembreDAOImplementation implements MembreDAO {
+public class JpaMembreDAO implements MembreDAO {
 
     private MembreRepository membreRepository;
 
-    public MembreDAOImplementation(MembreRepository membreRepository) {
+    public JpaMembreDAO(MembreRepository membreRepository) {
         this.membreRepository = membreRepository;
     }
 
@@ -22,7 +22,7 @@ public class MembreDAOImplementation implements MembreDAO {
     }
 
     @Override
-    public Membre findById(Integer id) {
+    public Membre findById(long id) {
         return membreRepository.findById(id).orElse(null);
     }
 
@@ -32,8 +32,14 @@ public class MembreDAOImplementation implements MembreDAO {
     }
 
     @Override
-    public void delete(Integer id) {
+    public void delete(long id) {
         membreRepository.deleteById(id);
     }
-    
+
+    @Override
+    public Membre findByIdWithSorties(long id){
+        return membreRepository.findByIdWithSorties(id);
+    }
+
+
 }
