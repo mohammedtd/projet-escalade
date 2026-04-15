@@ -22,7 +22,7 @@ public class CategorieDAOImplementation implements CategorieDAO {
     }
 
     @Override
-    public Categorie findById(Integer id) {
+    public Categorie findById(long id) {
         return categorieRepository.findById(id).orElse(null);
     }
 
