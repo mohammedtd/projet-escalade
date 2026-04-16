@@ -1,6 +1,6 @@
-package controller;
+package web;
 
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.stereotype.Controller;
 
 import model.Categorie;
 import service.CategorieService;
@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 
 
-@RestController
+@Controller
 @RequestMapping("/categories")
 public class CategorieController {
     private final CategorieService categorieService;
