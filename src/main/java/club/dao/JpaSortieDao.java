@@ -1,12 +1,12 @@
-package dao;
+package club.dao;
 
 import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import model.Sortie;
-import repository.SortieRepository;
+import club.model.Sortie;
+import club.repository.SortieRepository;
 
 @Repository
 public class JpaSortieDao implements SortieDAO  {

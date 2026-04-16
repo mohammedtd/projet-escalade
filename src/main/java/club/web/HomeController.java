@@ -1,6 +1,6 @@
-package web;
+package club.web;
 
-import dao.CategorieDAO;
+import club.dao.CategorieDAO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

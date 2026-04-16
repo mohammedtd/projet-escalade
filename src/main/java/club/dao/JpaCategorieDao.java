@@ -1,11 +1,11 @@
-package dao;
+package club.dao;
 
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import model.Categorie;
-import repository.CategorieRepository;
+import club.model.Categorie;
+import club.repository.CategorieRepository;
 
 @Repository
 public class JpaCategorieDao implements CategorieDAO {

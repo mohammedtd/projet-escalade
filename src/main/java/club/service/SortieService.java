@@ -1,4 +1,4 @@
-package service;
+package club.service;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dao.SortieDAO;
-import model.Sortie;
+import club.dao.SortieDAO;
+import club.model.Sortie;
 
 @Service
 public class SortieService {

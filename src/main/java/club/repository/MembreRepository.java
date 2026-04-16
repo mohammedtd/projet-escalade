@@ -1,8 +1,8 @@
-package repository;
+package club.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
-import model.Membre;
+import club.model.Membre;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 

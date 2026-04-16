@@ -1,12 +1,12 @@
-package service;
+package club.service;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import dao.MembreDAO;
-import model.Membre;
+import club.dao.MembreDAO;
+import club.model.Membre;
 
 @Service
 public class MembreService {

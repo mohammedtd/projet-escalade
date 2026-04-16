@@ -1,11 +1,11 @@
-package dao;
+package club.dao;
 
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import model.Membre;
-import repository.MembreRepository;
+import club.model.Membre;
+import club.repository.MembreRepository;
 
 @Repository
 public class JpaMembreDAO implements MembreDAO {

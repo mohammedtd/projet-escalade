@@ -1,9 +1,9 @@
-package dao;
+package club.dao;
 
 import java.time.LocalDate;
 import java.util.List;
 
-import model.Sortie;
+import club.model.Sortie;
 
 public interface SortieDAO {
 

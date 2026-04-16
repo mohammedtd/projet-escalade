@@ -1,8 +1,8 @@
-package dao;
+package club.dao;
 
 import java.util.List;
 
-import model.Categorie;
+import club.model.Categorie;
 
 public interface CategorieDAO {
     
