@@ -1,19 +1,16 @@
-package web;
+package club.web;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import model.Sortie;
-import service.SortieService;
+import club.model.Sortie;
+import club.service.CategorieService;
+import club.service.SortieService;
 import org.springframework.web.bind.annotation.RequestParam;
 
 
@@ -21,9 +18,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("/sorties")
 public class SortieController {
     private final SortieService sortieService;
+    private final CategorieService categorieService;
 
-    public SortieController(SortieService sortieService) {
+
+    public SortieController(SortieService sortieService, CategorieService categorieService) {
         this.sortieService = sortieService;
+        this.categorieService = categorieService;
+
     }
 
     /*@GetMapping
@@ -62,7 +63,6 @@ public class SortieController {
         return "detailSortie";
     }
 
-    // Affiche les résultats de recherche
     @GetMapping("/search")
     public String search(
         @RequestParam(required = false) String nom,
@@ -71,7 +71,19 @@ public class SortieController {
         @RequestParam(required = false) LocalDate dateSortie,
         Model model) {
 
+
+        if (nom != null && nom.trim().isEmpty()) {
+            nom = null;
+        }
+
         model.addAttribute("sorties", sortieService.search(nom, categorieId, createurId, dateSortie));
+        model.addAttribute("categories", categorieService.getAllCategories());
+
+        model.addAttribute("nom", nom);
+        model.addAttribute("categorieId", categorieId);
+        model.addAttribute("createurId", createurId);
+        model.addAttribute("dateSortie", dateSortie);
+
         return "resultatRecherche";
     }
 }
