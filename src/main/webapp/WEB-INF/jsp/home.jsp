@@ -21,7 +21,7 @@
     </ul>
 
     <h2>Recherche de sorties</h2>
-    <form action="<c:url value='/sorties/recherche' />" method="get">
+    <form action="<c:url value='/sorties/search' />" method="get">
         <div>
             <label for="nom">Nom de la sortie :</label>
             <input type="text" id="nom" name="nom">
