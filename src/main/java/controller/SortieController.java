@@ -1,5 +1,6 @@
 package controller;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -45,18 +46,12 @@ public class SortieController {
     }
 
     @GetMapping("/search")
-    public List<Sortie> searchByName(@RequestParam String motCle) {
-        return sortieService.searchByNom(motCle);
-    }
-
-    @GetMapping("/lieu")
-    public List<Sortie> searchByLieu(@RequestParam String motCle) {
-        return sortieService.searchByLieu(motCle);
-    }
-
-    @GetMapping("/categorie")
-    public List<Sortie> searchByCategorie(@RequestParam Integer categorieId) {
-        return sortieService.searchByCategorie(categorieId);
+    public List<Sortie> search(
+            @RequestParam(required = false) String nom,
+            @RequestParam(required = false) Integer categorieId,
+            @RequestParam(required = false) Long createurId,
+            @RequestParam(required = false) LocalDate dateSortie) {
+        return sortieService.search(nom, categorieId, createurId, dateSortie);
     }
 
 }
