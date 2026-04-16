@@ -24,6 +24,7 @@ public class Categorie {
     @NotEmpty
     private String categorieName;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "categorie")
     private List<Sortie> sorties;
 

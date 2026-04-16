@@ -2,6 +2,7 @@ package model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,6 +33,7 @@ public class Membre {
     @NotEmpty
     private String  motDePasse;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "createur")
     private List<Sortie> sorties;
 
