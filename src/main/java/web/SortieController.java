@@ -4,6 +4,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,7 +26,7 @@ public class SortieController {
         this.sortieService = sortieService;
     }
 
-    @GetMapping
+    /*@GetMapping
     public List<Sortie> getAll() {
         return sortieService.getAllSorties();
     }
@@ -52,6 +53,26 @@ public class SortieController {
             @RequestParam(required = false) Long createurId,
             @RequestParam(required = false) LocalDate dateSortie) {
         return sortieService.search(nom, categorieId, createurId, dateSortie);
+    }*/
+
+    @GetMapping("/{id}")
+    public String getById(@PathVariable Integer id, Model model) {
+        Sortie sortie = sortieService.getSortie(id);
+        model.addAttribute("sortie", sortie);
+        return "detailSortie";
     }
 
+    // Affiche les résultats de recherche
+    @GetMapping("/search")
+    public String search(
+        @RequestParam(required = false) String nom,
+        @RequestParam(required = false) Integer categorieId,
+        @RequestParam(required = false) Long createurId,
+        @RequestParam(required = false) LocalDate dateSortie,
+        Model model) {
+
+        model.addAttribute("sorties", sortieService.search(nom, categorieId, createurId, dateSortie));
+        return "resultatRecherche";
+    }
 }
+

@@ -3,6 +3,7 @@ package web;
 import org.springframework.stereotype.Controller;
 
 import model.Categorie;
+import org.springframework.ui.Model;
 import service.CategorieService;
 
 import java.util.List;
@@ -25,7 +26,7 @@ public class CategorieController {
         this.categorieService = categorieService;
     }
 
-    @GetMapping
+    /*@GetMapping
     public List<Categorie> getAll() {
         return categorieService.getAllCategories();
     }
@@ -33,15 +34,37 @@ public class CategorieController {
     @GetMapping("/{id}")
     public Categorie getCatById(@PathVariable Integer id) {
         return categorieService.getCategorieById(id);
-    }
+    }*/
     
-    @PostMapping
+    /*@PostMapping
     public Categorie save(@RequestBody Categorie categorie) {
         return categorieService.createCategorie(categorie);
-    }
+    }*/
 
-    @DeleteMapping("/{id}")
+   /* @DeleteMapping("/{id}")
     public void delete(@PathVariable Integer id) {
         categorieService.delete(id);
+    }*/
+
+    @GetMapping
+    public String listCategories(Model model) {
+
+        model.addAttribute("categories", categorieService.getAllCategories());
+
+        return "categories"; // JSP
     }
+
+    @GetMapping("/{id}")
+    public String detailCategorie(@PathVariable Integer id, Model model) {
+
+        Categorie categorie = categorieService.getCategorieById(id);
+
+        model.addAttribute("categorie", categorie);
+        model.addAttribute("sorties", categorie.getSorties());
+
+        return "sortieCategorie"; // JSP
+    }
+
 }
+
+
