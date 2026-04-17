@@ -4,6 +4,7 @@ import club.dao.CategorieDAO;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 
 
 @Controller
@@ -15,12 +16,6 @@ public class HomeController {
     this.categorieDAO = categorieDAO;
   }
 
-  /*@GetMapping("/")
-  public String home(Model model) {
-    model.addAttribute("categories", categorieDAO.findAll());
-    return "home";
-  }*/
-
   @GetMapping("/")
   public String home(Model model) {
     return "accueil";
@@ -30,5 +25,6 @@ public class HomeController {
   public String visit(Model model) {
     return "home";
   }
+
 
 }
