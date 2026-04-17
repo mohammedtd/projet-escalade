@@ -15,9 +15,20 @@ public class HomeController {
     this.categorieDAO = categorieDAO;
   }
 
-  @GetMapping("/")
+  /*@GetMapping("/")
   public String home(Model model) {
     model.addAttribute("categories", categorieDAO.findAll());
     return "home";
+  }*/
+
+  @GetMapping("/")
+  public String home(Model model) {
+    return "accueil";
   }
+
+  @GetMapping("/home")
+  public String visit(Model model) {
+    return "home";
+  }
+
 }
