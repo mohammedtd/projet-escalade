@@ -58,6 +58,7 @@ public class SpringSecurity {
     });
     // Nous autorisons un formulaire de login
     http.formLogin(config -> {
+      config.defaultSuccessUrl("/home", true);
       config.permitAll();
     });
     // Nous autorisons un formulaire de logout
