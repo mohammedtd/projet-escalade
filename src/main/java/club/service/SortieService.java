@@ -25,7 +25,7 @@ public class SortieService {
     }
 
     // Obtenir les détails d'une sortie 
-    public Sortie getSortie(Integer id) {
+    public Sortie getSortie(long id) {
         return sortieDAO.findById(id);
     }
 
@@ -35,7 +35,7 @@ public class SortieService {
     }
 
     // Supprimer une sortie
-    public void deleteSortie(Integer id) {
+    public void deleteSortie(long id) {
         sortieDAO.delete(id);
     }
 
