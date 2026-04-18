@@ -25,7 +25,7 @@ public class CategorieService {
     }
 
     // Obtenir une catégorie
-    public Categorie getCategorieById (Integer id) {
+    public Categorie getCategorieById (long id) {
         return categorieDAO.findById(id);
     }
 
