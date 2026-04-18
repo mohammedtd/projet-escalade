@@ -4,20 +4,17 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Catégories</title>
+    <title>Liste des catégories</title>
 </head>
 <body>
-
     <h1>Liste des catégories</h1>
-
     <p>
-        <a href="<c:url value='/' />">Retour à l'accueil</a>
+        <a href="<c:url value='/home' />">Retour à l'accueil</a>
     </p>
 
     <c:if test="${empty categories}">
         <p>Aucune catégorie disponible.</p>
     </c:if>
-
     <c:if test="${not empty categories}">
         <ul>
             <c:forEach var="categorie" items="${categories}">
@@ -26,8 +23,10 @@
                         <c:out value="${categorie.categorieName}" />
                     </a>
                 </li>
+
             </c:forEach>
         </ul>
+
     </c:if>
 
 </body>
