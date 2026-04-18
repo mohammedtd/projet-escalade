@@ -12,97 +12,89 @@
     <h1>Bienvenue sur le catalogue des sorties du club d'escalade</h1>
 
 
-
     <h2>Navigation</h2>
-    <sec:authorize access="!isAuthenticated()">
-      <li><a href="<c:url value='/categories' />">Voir les catégories</a></li>
-      <li><a href="<c:url value='/sortie' />" > Voir les sorties</a></li>
-    </sec:authorize>
-    <sec:authorize access="isAuthenticated()">
-      <li><a href="<c:url value='/createur' />">voir les créateur et leurs sorties</a></li>
-      <li><a href="<c:url value='/choix' />">gérer mes sorties</a></li>
-      <form action="<c:url value='/logout' />" method="post">
-          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-          <button type="submit">Logout</button>
-      </form>
-    </sec:authorize>
+        <ul>
+            <li>
+                <a href="<c:url value='/categories' />">Voir les catégories</a>
+            </li>
+            <li>
+                <a href="<c:url value='/sorties' />">Voir les sorties</a>
+            </li>
+            <sec:authorize access="isAuthenticated()">
+                <li>
+                    <a href="<c:url value='/createur' />">Voir les créateurs et leurs sorties</a>
+                </li>
+                <li>
+                    <a href="<c:url value='/choix' />">Gérer mes sorties</a>
+                </li>
+                <li>
+                    <form action="<c:url value='/logout' />" method="post">
+                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                        <button type="submit">Se déconnecter</button>
+                    </form>
+                </li>
 
+            </sec:authorize>
+
+        </ul>
 
     <h2>Recherche de sorties</h2>
-    <sec:authorize access="!isAuthenticated()">
-          <form action="<c:url value='/sorties/search' />" method="get">
-                  <div>
-                      <label for="nom">Nom de la sortie :</label>
-                      <input type="text" id="nom" name="nom">
-                  </div>
-                  <br>
 
-                  <div>
-                      <label for="categorieId">Catégorie :</label>
-                      <select id="categorieId" name="categorieId">
-                          <option value="">-- Toutes les catégories --</option>
-                          <c:forEach var="categorie" items="${categories}">
-                              <option value="${categorie.categorieID}">
-                                  <c:out value="${categorie.categorieName}" />
-                              </option>
-                          </c:forEach>
-                      </select>
-                  </div>
-                  <br>
+        <a href="/categories">
+                <div>
+                <label for="nom">Nom de la sortie :</label>
+                <select id="nom" name="nom">
+                    <option value="">-- Toutes les sorties --</option>
+                    <c:forEach var="sortie" items="${sorties}">
+                        <option value="${sortie.nomSortie}">
+                            <c:out value="${sortie.nomSortie}" />
+                        </option>
+                    </c:forEach>
+                </select>
+            </div>
 
-                  <div>
-                      <label for="dateSortie">Date de sortie :</label>
-                      <input type="date" id="dateSortie" name="dateSortie">
-                  </div>
-                  <br>
+            <br>
+                <div>
+                <label for="categorieId">Catégorie :</label>
+                <select id="categorieId" name="categorieId">
+                    <option value="">-- Toutes les catégories --</option>
+                    <c:forEach var="categorie" items="${categories}">
+                        <option value="${categorie.categorieID}">
+                            <c:out value="${categorie.categorieName}" />
+                        </option>
+                    </c:forEach>
+                </select>
+            </div>
 
-                  <button type="submit">Rechercher</button>
-              </form>
+            <br>
 
-        </sec:authorize>
-        <sec:authorize access="isAuthenticated()">
-          <form action="<c:url value='/sorties/search' />" method="get">
-                  <div>
-                      <label for="nom">Nom de la sortie :</label>
-                      <input type="text" id="nom" name="nom">
-                  </div>
-                  <br>
+            <div>
+                <label for="dateSortie">Date de sortie :</label>
+                <input type="date" id="dateSortie" name="dateSortie">
+            </div>
 
-                  <div>
-                      <label for="categorieId">Catégorie :</label>
-                      <select id="categorieId" name="categorieId">
-                          <option value="">-- Toutes les catégories --</option>
-                          <c:forEach var="categorie" items="${categories}">
-                              <option value="${categorie.categorieID}">
-                                  <c:out value="${categorie.categorieName}" />
-                              </option>
-                          </c:forEach>
-                      </select>
-                  </div>
+            <br>
 
-                  <div>
-                       <label for="memberId">Créateur :</label>
-                       <select id="memberId" name="memberId">
-                           <option value="">-- Toutes les membres créateurs --</option>
-                           <c:forEach var="membre" items="${membres}">
-                               <option value="${membre.membreID}">
-                                   <c:out value="${membre.membreName}" />
-                               </option>
-                           </c:forEach>
-                       </select>
-                  </div>
-                  <br>
+            <sec:authorize access="isAuthenticated()">
+                <div>
+                    <label for="createurId">Créateur :</label>
+                    <select id="createurId" name="createurId">
+                        <option value="">-- Tous les créateurs --</option>
+                        <c:forEach var="membre" items="${membres}">
+                            <option value="${membre.membreID}">
+                                <c:out value="${membre.prenom}" />
+                                <c:out value=" " />
+                                <c:out value="${membre.nom}" />
+                            </option>
+                        </c:forEach>
+                    </select>
+                </div>
 
-                  <div>
-                      <label for="dateSortie">Date de sortie :</label>
-                      <input type="date" id="dateSortie" name="dateSortie">
-                  </div>
-                  <br>
+                <br>
+            </sec:authorize>
 
-                  <button type="submit">Rechercher</button>
-              </form>
-
-        </sec:authorize>
+            <button type="submit">Rechercher</button>
+        </form>>
 
 
 </body>
