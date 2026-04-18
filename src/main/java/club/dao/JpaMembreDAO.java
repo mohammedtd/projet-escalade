@@ -1,6 +1,7 @@
 package club.dao;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Repository;
 
@@ -40,6 +41,12 @@ public class JpaMembreDAO implements MembreDAO {
     public Membre findByIdWithSorties(long id){
         return membreRepository.findByIdWithSorties(id);
     }
+
+    @Override
+    public Optional<Membre> findByEmail(String email) {
+        return membreRepository.findByEmail(email);
+    }
+
 
 
 }

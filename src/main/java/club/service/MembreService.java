@@ -1,6 +1,7 @@
 package club.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,5 +40,9 @@ public class MembreService {
     }
 
     public Membre findByIdWithSorties(long id){ return membreDAO.findByIdWithSorties(id);}
+
+    public Optional<Membre > findByEmail(String email) {
+        return membreDAO.findByEmail(email);
+    }
 
 }

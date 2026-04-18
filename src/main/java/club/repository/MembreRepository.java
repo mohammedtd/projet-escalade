@@ -17,6 +17,6 @@ public interface MembreRepository extends JpaRepository<Membre, Long>{
   @Query("SELECT m FROM Membre m LEFT JOIN FETCH m.sorties WHERE m.membreID = :id")
   Membre findByIdWithSorties(@Param("id") long id);
 
-  Optional<Membre> findByEmail(String email);
+  Optional<Membre >findByEmail(String email);
 
 }
