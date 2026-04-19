@@ -77,23 +77,23 @@
 
         <br>
 
-        <sec:authorize access="isAuthenticated()">
-            <div>
-                <label for="createurId">Créateur :</label>
-                <select id="createurId" name="createurId">
-                    <option value="">-- Tous les créateurs --</option>
-                    <c:forEach var="membre" items="${membres}">
-                        <option value="${membre.membreID}">
-                            <c:out value="${membre.prenom}" />
-                            <c:out value=" " />
-                            <c:out value="${membre.nom}" />
-                        </option>
-                    </c:forEach>
-                </select>
-            </div>
+       <sec:authorize access="isAuthenticated()">
+           <div>
+               <label for="createurId">Créateur :</label>
+               <select id="createurId" name="createurId">
+                   <option value="">-- Tous les créateurs --</option>
+                   <c:forEach var="membre" items="${membres}">
+                       <option value="${membre.membreID}">
+                           <c:out value="${membre.prenom}" />
+                           <c:out value=" " />
+                           <c:out value="${membre.nom}" />
+                       </option>
+                   </c:forEach>
+               </select>
+           </div>
 
-            <br>
-        </sec:authorize>
+           <br>
+       </sec:authorize>
 
         <button type="submit">Rechercher</button>
     </form>
