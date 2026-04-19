@@ -35,47 +35,7 @@
                     <a href="<c:url value='/sorties/${sortie.sortieID}' />">
                         <c:out value="${sortie.nomSortie}" />
                     </a>
-
-                    <br>
-
-                    <strong>Description :</strong>
-                    <c:out value="${sortie.description}" />
-
-                    <br>
-
-                    <strong>Date :</strong>
-                    <c:out value="${sortie.dateSortie}" />
-
-                    <br>
-
-                    <sec:authorize access="isAuthenticated()">
-
-                        <strong>Créateur :</strong>
-                        <c:out value="${sortie.createur.prenom}" />
-                        <c:out value=" " />
-                        <c:out value="${sortie.createur.nom}" />
-
-                        <br>
-
-                        <strong>Site Web :</strong>
-
-                        <c:if test="${not empty sortie.siteWeb}">
-                            <a href="${sortie.siteWeb}" target="_blank">
-                                Voir le site
-                            </a>
-                        </c:if>
-
-                        <c:if test="${empty sortie.siteWeb}">
-                            <span>Non disponible</span>
-                        </c:if>
-
-                        <br>
-
-                    </sec:authorize>
-
                 </li>
-
-                <br>
             </c:forEach>
 
         </ul>
