@@ -87,6 +87,38 @@ public class DataInitializer implements CommandLineRunner {
     s2.setCreateur(m2);
     sortieService.saveSortie(s2);
 
+    // Membre 4 : non créateur
+    Membre m4 = new Membre();
+    m4.setNom("Durand");
+    m4.setPrenom("Sophie");
+    m4.setEmail("sophie@test.com");
+    m4.setMotDePasse(passwordEncoder.encode("1234"));
+    m4 = membreService.saveMembre(m4);
+
+// Membre 5 : non créateur
+    Membre m5 = new Membre();
+    m5.setNom("Petit");
+    m5.setPrenom("Lucas");
+    m5.setEmail("lucas@test.com");
+    m5.setMotDePasse(passwordEncoder.encode("1234"));
+    m5 = membreService.saveMembre(m5);
+
+// Membre 6 : non créateur
+    Membre m6 = new Membre();
+    m6.setNom("Robert");
+    m6.setPrenom("Ines");
+    m6.setEmail("ines@test.com");
+    m6.setMotDePasse(passwordEncoder.encode("1234"));
+    m6 = membreService.saveMembre(m6);
+
+// Membre 7 : non créateur
+    Membre m7 = new Membre();
+    m7.setNom("Moreau");
+    m7.setPrenom("Yanis");
+    m7.setEmail("yanis@test.com");
+    m7.setMotDePasse(passwordEncoder.encode("1234"));
+    m7 = membreService.saveMembre(m7);
+
     System.out.println("=== Données initialisées ===");
     System.out.println("=== Nb catégories : " + categorieService.getAllCategories().size() + " ===");
   }
