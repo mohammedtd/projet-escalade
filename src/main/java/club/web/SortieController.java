@@ -1,5 +1,6 @@
 package club.web;
 
+import club.service.CategorieService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -14,8 +15,10 @@ import java.time.LocalDate;
 @Controller
 public class SortieController {
     private final SortieService sortieService;
-    public SortieController(SortieService sortieService) {
+    private final CategorieService categorieService ;
+    public SortieController(SortieService sortieService, CategorieService categorieService) {
         this.sortieService = sortieService;
+        this.categorieService=categorieService;
     }
 
     @GetMapping("/sorties")
@@ -45,6 +48,12 @@ public class SortieController {
         model.addAttribute("sorties",
             sortieService.search(nom, categorieId, createurId, dateSortie));
 
+        model.addAttribute("categories", categorieService.getAllCategories());
+
+        model.addAttribute("nom", nom);
+        model.addAttribute("categorieId", categorieId);
+        model.addAttribute("createurId", createurId);
+        model.addAttribute("dateSortie", dateSortie);
         return "resultatRecherche";
     }
 }
