@@ -33,29 +33,35 @@ public class SpringSecurity {
     };
   }
 
+
   @Bean
   SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-    String[] anonymousRequests = { "/", //
-        "/login", //
-        "/categories", //
-        "/categories", //
-        "/categories/**", //
-        "/sorties/**",  //
+
+    String[] publicRequests = {
+        "/",
+        "/login",
+        "/home",
+        "/categories",
+        "/categories/**",
+        "/sorties/**"
     };
 
-    String[] adminRequests = { //
-         //
-    };
+    http.authorizeHttpRequests(config -> {
 
-    http.authorizeHttpRequests(config -> {//
+      // Autorise les forwards internes vers les JSP
       config.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll();
-      // Pour tous
-      config.requestMatchers(anonymousRequests).permitAll();//
-      // Pour les admins
-      config.requestMatchers(adminRequests).hasAnyAuthority("ROLE_MEMBER");//
-      // Pour les autres
+
+      // Pages publiques accessibles sans connexion
+      config.requestMatchers(publicRequests).permitAll();
+
+      // Pages accessibles uniquement si connecté
+      config.requestMatchers("/createur", "/choix/**").authenticated();
+
+      // Toute autre requête demande authentification
       config.anyRequest().authenticated();
     });
+
+
     // Nous autorisons un formulaire de login
     http.formLogin(config -> {
       config.defaultSuccessUrl("/home", true);
@@ -68,7 +74,7 @@ public class SpringSecurity {
     });
     // Nous activons CSRF pour les actions protégées
     http.csrf(config -> {
-      config.ignoringRequestMatchers(anonymousRequests);
+      config.ignoringRequestMatchers(publicRequests);
     });
     return http.build();
   }
