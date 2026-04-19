@@ -15,6 +15,6 @@ public interface SortieDAO {
 
     void delete(long id);
 
-    List<Sortie> search(String nom, Integer categorieId, Long createurId, LocalDate dateSortie);
+    List<Sortie> search(String nom, long categorieId, Long createurId, LocalDate dateSortie);
 
 }

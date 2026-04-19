@@ -38,7 +38,7 @@ public class JpaSortieDao implements SortieDAO  {
     }
 
     @Override
-    public List<Sortie> search(String nom, Integer categorieId, Long createurId, LocalDate dateSortie) {
+    public List<Sortie> search(String nom, long categorieId, Long createurId, LocalDate dateSortie) {
         return sortieRepository.search(nom, categorieId, createurId, dateSortie);
     }
 

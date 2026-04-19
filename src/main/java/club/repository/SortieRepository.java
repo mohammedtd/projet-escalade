@@ -15,6 +15,6 @@ public interface SortieRepository extends JpaRepository<Sortie, Long> {
     AND (:createurId IS NULL OR s.createur.membreID = :createurId)
     AND (:dateSortie IS NULL OR s.dateSortie = :dateSortie)
     """)
-    List<Sortie> search(String nom, Integer categorieId, Long createurId, LocalDate dateSortie);
+    List<Sortie> search(String nom, long categorieId, Long createurId, LocalDate dateSortie);
 
 }
