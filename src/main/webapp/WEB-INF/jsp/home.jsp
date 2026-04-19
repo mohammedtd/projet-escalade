@@ -40,61 +40,63 @@
 
     <h2>Recherche de sorties</h2>
 
-        <a href="/categories">
-                <div>
-                <label for="nom">Nom de la sortie :</label>
-                <select id="nom" name="nom">
-                    <option value="">-- Toutes les sorties --</option>
-                    <c:forEach var="sortie" items="${sorties}">
-                        <option value="${sortie.nomSortie}">
-                            <c:out value="${sortie.nomSortie}" />
-                        </option>
-                    </c:forEach>
-                </select>
-            </div>
+    <form action="<c:url value='/sorties/search' />" method="get">
 
-            <br>
-                <div>
-                <label for="categorieId">Catégorie :</label>
-                <select id="categorieId" name="categorieId">
-                    <option value="">-- Toutes les catégories --</option>
-                    <c:forEach var="categorie" items="${categories}">
-                        <option value="${categorie.categorieID}">
-                            <c:out value="${categorie.categorieName}" />
-                        </option>
-                    </c:forEach>
-                </select>
-            </div>
+        <div>
+            <label for="nom">Nom de la sortie :</label>
+            <select id="nom" name="nom">
+                <option value="">-- Toutes les sorties --</option>
+                <c:forEach var="sortie" items="${sorties}">
+                    <option value="${sortie.nomSortie}">
+                        <c:out value="${sortie.nomSortie}" />
+                    </option>
+                </c:forEach>
+            </select>
+        </div>
 
-            <br>
+        <br>
 
+        <div>
+            <label for="categorieId">Catégorie :</label>
+            <select id="categorieId" name="categorieId">
+                <option value="">-- Toutes les catégories --</option>
+                <c:forEach var="categorie" items="${categories}">
+                    <option value="${categorie.categorieID}">
+                        <c:out value="${categorie.categorieName}" />
+                    </option>
+                </c:forEach>
+            </select>
+        </div>
+
+        <br>
+
+        <div>
+            <label for="dateSortie">Date de sortie :</label>
+            <input type="date" id="dateSortie" name="dateSortie">
+        </div>
+
+        <br>
+
+        <sec:authorize access="isAuthenticated()">
             <div>
-                <label for="dateSortie">Date de sortie :</label>
-                <input type="date" id="dateSortie" name="dateSortie">
+                <label for="createurId">Créateur :</label>
+                <select id="createurId" name="createurId">
+                    <option value="">-- Tous les créateurs --</option>
+                    <c:forEach var="membre" items="${membres}">
+                        <option value="${membre.membreID}">
+                            <c:out value="${membre.prenom}" />
+                            <c:out value=" " />
+                            <c:out value="${membre.nom}" />
+                        </option>
+                    </c:forEach>
+                </select>
             </div>
 
             <br>
+        </sec:authorize>
 
-            <sec:authorize access="isAuthenticated()">
-                <div>
-                    <label for="createurId">Créateur :</label>
-                    <select id="createurId" name="createurId">
-                        <option value="">-- Tous les créateurs --</option>
-                        <c:forEach var="membre" items="${membres}">
-                            <option value="${membre.membreID}">
-                                <c:out value="${membre.prenom}" />
-                                <c:out value=" " />
-                                <c:out value="${membre.nom}" />
-                            </option>
-                        </c:forEach>
-                    </select>
-                </div>
-
-                <br>
-            </sec:authorize>
-
-            <button type="submit">Rechercher</button>
-        </form>>
+        <button type="submit">Rechercher</button>
+    </form>
 
 
 </body>
