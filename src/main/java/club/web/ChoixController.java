@@ -1,6 +1,7 @@
 package club.web;
 
 import java.security.Principal;
+import java.time.LocalDate;
 import java.util.Optional;
 
 import club.service.CategorieService;
@@ -74,29 +75,44 @@ public class ChoixController {
       Principal principal) {
 
     String email = principal.getName();
-    Membre membre = membreService.findByEmail(email).get();
+    Optional<Membre> membreOpt = membreService.findByEmail(email);
 
-    Sortie sortie = new Sortie();
+    if (membreOpt.isPresent()) {
+      Membre membre = membreOpt.get();
+      Sortie sortie = new Sortie();
+      sortie.setNomSortie(nomSortie);
+      sortie.setDescription(description);
+      sortie.setSiteWeb(siteWeb);
+      sortie.setDateSortie(LocalDate.parse(dateSortie));
+      sortie.setCategorie(categorieService.getCategorieById(categorieId));
 
-    sortie.setNomSortie(nomSortie);
-    sortie.setDescription(description);
-    sortie.setSiteWeb(siteWeb);
-    sortie.setDateSortie(java.time.LocalDate.parse(dateSortie));
-    sortie.setCategorie(categorieService.getCategorieById(categorieId));
-    sortie.setCreateur(membre);
-
-    sortieService.saveSortie(sortie);
-
+      sortie.setCreateur(membre);
+      sortieService.saveSortie(sortie);
+    }
     return "redirect:/choix";
   }
 
-  @GetMapping("/choix/modifier/{id}")
-  public String formModifier(@PathVariable Long id, Model model) {
-    Sortie sortie = sortieService.getSortie(id);
-    model.addAttribute("sortie", sortie);
-    model.addAttribute("categories", categorieService.getAllCategories());
 
-    return "formSortie";
+  @GetMapping("/choix/modifier/{id}")
+  public String formModifier(@PathVariable Long id, Model model, Principal principal) {
+    Sortie sortie = sortieService.getSortie(id);
+
+    String email = principal.getName();
+
+    Optional<Membre> membreOpt = membreService.findByEmail(email);
+
+    if (membreOpt.isPresent()) {
+      Membre membre = membreOpt.get();
+      if (sortie.getCreateur() != null &&
+          sortie.getCreateur().getMembreID() == membre.getMembreID()) {
+
+        model.addAttribute("sortie", sortie);
+        model.addAttribute("categories", categorieService.getAllCategories());
+
+        return "formSortie";
+      }
+    }
+    return "redirect:/choix";
   }
 
   @PostMapping("/choix/modifier/{id}")
@@ -106,18 +122,25 @@ public class ChoixController {
       @RequestParam String description,
       @RequestParam(required = false) String siteWeb,
       @RequestParam String dateSortie,
-      @RequestParam Long categorieId) {
-
+      @RequestParam Long categorieId,
+      Principal principal) {
     Sortie sortie = sortieService.getSortie(id);
+    String email = principal.getName();
+    Optional<Membre> membreOpt = membreService.findByEmail(email);
+    if (membreOpt.isPresent()) {
+      Membre membre = membreOpt.get();
+      if (sortie.getCreateur() != null &&
+          sortie.getCreateur().getMembreID() == membre.getMembreID()) {
 
-    sortie.setNomSortie(nomSortie);
-    sortie.setDescription(description);
-    sortie.setSiteWeb(siteWeb);
-    sortie.setDateSortie(java.time.LocalDate.parse(dateSortie));
-    sortie.setCategorie(categorieService.getCategorieById(categorieId));
+        sortie.setNomSortie(nomSortie);
+        sortie.setDescription(description);
+        sortie.setSiteWeb(siteWeb);
+        sortie.setDateSortie(LocalDate.parse(dateSortie));
+        sortie.setCategorie(categorieService.getCategorieById(categorieId));
 
-    sortieService.saveSortie(sortie);
-
+        sortieService.saveSortie(sortie);
+      }
+    }
     return "redirect:/choix";
   }
 }
