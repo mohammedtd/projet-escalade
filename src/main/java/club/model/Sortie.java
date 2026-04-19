@@ -2,12 +2,15 @@ package club.model;
 
 import java.time.LocalDate;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import lombok.Data;
@@ -22,15 +25,18 @@ public class Sortie {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long sortieID;
+
+    @NotBlank(message = "Le nom est obligatoire")
     @NotEmpty
     private String nomSortie;
 
+    @NotBlank(message = "Le nom est obligatoire")
     private String description;
 
     private String siteWeb;
 
-
-    @NotNull
+    @NotNull(message = "La date est obligatoire")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate dateSortie;
 
 
@@ -42,7 +48,7 @@ public class Sortie {
 
     @ManyToOne
     @JoinColumn(name = "categorie_id")
-    @NotNull
+    @NotNull(message = "La categorie est obligatoire")    
     private Categorie categorie;
 
 

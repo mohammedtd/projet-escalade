@@ -8,19 +8,19 @@
         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
 
     Nom :
-    <input type="text" name="nomSortie" value="${sortie.nomSortie}" />
+    <input type="text" name="nomSortie" value="${sortie.nomSortie}" required />
     <br>
 
     Description :
-    <input type="text" name="description" value="${sortie.description}" />
+    <input type="text" name="description" value="${sortie.description}" required/>
     <br>
 
     Site Web :
-    <input type="text" name="siteWeb" value="${sortie.siteWeb}" />
+    <input type="text" name="siteWeb" value="${sortie.siteWeb}"/>
     <br>
 
     Date :
-    <input type="date" name="dateSortie" value="${sortie.dateSortie}" />
+    <input type="date" name="dateSortie" value="${sortie.dateSortie}" required/>
     <br>
 
     Catégorie :
