@@ -1,6 +1,7 @@
 package club.model;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -9,6 +10,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -51,6 +54,13 @@ public class Sortie {
     @NotNull(message = "La categorie est obligatoire")    
     private Categorie categorie;
 
+    @ManyToMany
+    @JoinTable(
+        name = "sortie_membres",
+        joinColumns = @JoinColumn(name = "sortie_id"),
+        inverseJoinColumns = @JoinColumn(name = "membre_id")
+    )
+    private List<Membre> membres;
 
 
 }
