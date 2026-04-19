@@ -7,6 +7,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import club.model.Sortie;
 import club.service.SortieService;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import java.time.LocalDate;
 
 @Controller
 public class SortieController {
@@ -25,5 +28,23 @@ public class SortieController {
         Sortie sortie = sortieService.getSortie(id);
         model.addAttribute("sortie", sortie);
         return "detailSortie";
+    }
+
+    @GetMapping("/sorties/search")
+    public String search(
+        @RequestParam(required = false) String nom,
+        @RequestParam(required = false) Long categorieId,
+        @RequestParam(required = false) Long createurId,
+        @RequestParam(required = false) LocalDate dateSortie,
+        Model model) {
+
+        if (nom != null && nom.trim().isEmpty()) {
+            nom = null;
+        }
+
+        model.addAttribute("sorties",
+            sortieService.search(nom, categorieId, createurId, dateSortie));
+
+        return "resultatRecherche";
     }
 }
