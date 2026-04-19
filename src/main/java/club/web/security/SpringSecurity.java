@@ -43,7 +43,9 @@ public class SpringSecurity {
         "/home",
         "/categories",
         "/categories/**",
-        "/sorties/**"
+        "/sorties/**",
+        "/reset-password",
+        "/forgot-password"
     };
 
     http.authorizeHttpRequests(config -> {
