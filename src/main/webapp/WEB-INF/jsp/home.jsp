@@ -38,7 +38,7 @@
             <form action="<c:url value='/sorties/search' />" method="get" class="grid gap-4 md:grid-cols-2">
                 <div>
                     <label for="nom" class="mb-2 block text-sm font-medium text-slate-700">Nom de la sortie</label>
-                    <select id="nom" name="nom" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none">
+                    <select id="nom" name="nom" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none" required>
                         <option value="">-- Toutes les sorties --</option>
                         <c:forEach var="sortie" items="${sorties}">
                             <option value="${sortie.nomSortie}">
@@ -50,7 +50,7 @@
 
                 <div>
                     <label for="categorieId" class="mb-2 block text-sm font-medium text-slate-700">Catégorie</label>
-                    <select id="categorieId" name="categorieId" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none">
+                    <select id="categorieId" name="categorieId" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none" required>
                         <option value="">-- Toutes les catégories --</option>
                         <c:forEach var="categorie" items="${categories}">
                             <option value="${categorie.categorieID}">
@@ -62,13 +62,13 @@
 
                 <div>
                     <label for="dateSortie" class="mb-2 block text-sm font-medium text-slate-700">Date de sortie</label>
-                    <input type="date" id="dateSortie" name="dateSortie" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none">
+                    <input type="date" id="dateSortie" name="dateSortie" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none" required>
                 </div>
 
                 <sec:authorize access="isAuthenticated()">
                     <div>
                         <label for="createurId" class="mb-2 block text-sm font-medium text-slate-700">Créateur</label>
-                        <select id="createurId" name="createurId" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none">
+                        <select id="createurId" name="createurId" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none" required>
                             <option value="">-- Tous les créateurs --</option>
                             <c:forEach var="membre" items="${membres}">
                                 <option value="${membre.membreID}">
