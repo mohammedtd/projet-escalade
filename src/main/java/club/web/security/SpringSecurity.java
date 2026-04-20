@@ -78,6 +78,13 @@ public class SpringSecurity {
     http.csrf(config -> {
       config.ignoringRequestMatchers(publicRequests);
     });
+    http.formLogin(config -> {
+      config.loginPage("/login");
+      config.loginProcessingUrl("/login");
+      config.defaultSuccessUrl("/home", true);
+      config.failureUrl("/login?error=true");
+      config.permitAll();
+    });
     return http.build();
   }
 

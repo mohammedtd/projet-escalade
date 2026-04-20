@@ -9,61 +9,47 @@
 <head>
     <meta charset="UTF-8">
     <title>Détail de la sortie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>
-        Détail de la sortie :
-        <c:out value="${sortie.nomSortie}" />
-    </h1>
-    <p>
-        <a href="<c:url value='/sorties' />">Retour aux sorties</a>
-    </p>
+<body class="min-h-screen bg-slate-100 text-slate-800">
+    <main class="mx-auto max-w-4xl px-4 py-10 md:px-6">
+        <header class="mb-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <h1 class="text-2xl font-extrabold text-slate-900 md:text-3xl">
+                Détail de la sortie :
+                <c:out value="${sortie.nomSortie}" />
+            </h1>
+            <div class="mt-4 flex flex-wrap gap-3">
+                <a href="<c:url value='/sorties' />" class="rounded-xl border border-slate-300 bg-white px-4 py-2 font-medium text-slate-700 transition hover:bg-slate-50">← Retour aux sorties</a>
+                <a href="<c:url value='/home' />" class="rounded-xl border border-slate-300 bg-white px-4 py-2 font-medium text-slate-700 transition hover:bg-slate-50">⌂ Retour à l'accueil</a>
+            </div>
+        </header>
 
-    <p>
-        <a href="<c:url value='/home' />">Retour à l'accueil</a>
-    </p>
-    <p>
-        <strong>Nom :</strong>
-        <c:out value="${sortie.nomSortie}" />
-    </p>
-    <p>
-        <strong>Description :</strong>
-        <c:out value="${sortie.description}" />
-    </p>
-    <p>
-        <strong>Date :</strong>
-        <c:out value="${sortie.dateSortie}" />
-    </p>
-    <p>
-        <strong>Catégorie :</strong>
-        <c:out value="${sortie.categorie.categorieName}" />
-    </p>
-    <sec:authorize access="isAuthenticated()">
+        <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <p><strong>Nom :</strong> <c:out value="${sortie.nomSortie}" /></p>
+            <p><strong>Description :</strong> <c:out value="${sortie.description}" /></p>
+            <p><strong>Date :</strong> <c:out value="${sortie.dateSortie}" /></p>
+            <p><strong>Catégorie :</strong> <c:out value="${sortie.categorie.categorieName}" /></p>
 
-        <p>
-            <strong>Créateur :</strong>
+            <sec:authorize access="isAuthenticated()">
+                <p>
+                    <strong>Créateur :</strong>
+                    <c:out value="${sortie.createur.prenom}" />
+                    <c:out value=" " />
+                    <c:out value="${sortie.createur.nom}" />
+                </p>
 
-            <c:out value="${sortie.createur.prenom}" />
-            <c:out value=" " />
-            <c:out value="${sortie.createur.nom}" />
-        </p>
+                <p>
+                    <strong>Site Web :</strong>
+                    <c:if test="${not empty sortie.siteWeb}">
+                        <a href="${sortie.siteWeb}" target="_blank" class="text-blue-600 underline hover:text-blue-700">Voir le site</a>
+                    </c:if>
 
-        <p>
-            <strong>Site Web :</strong>
-            <c:if test="${not empty sortie.siteWeb}">
-                <a href="${sortie.siteWeb}" target="_blank">
-                    Voir le site
-                </a>
-            </c:if>
-
-            <c:if test="${empty sortie.siteWeb}">
-                <span>Non disponible</span>
-            </c:if>
-
-        </p>
-
-    </sec:authorize>
-
-
+                    <c:if test="${empty sortie.siteWeb}">
+                        <span class="text-slate-500">Non disponible</span>
+                    </c:if>
+                </p>
+            </sec:authorize>
+        </section>
+    </main>
 </body>
 </html>

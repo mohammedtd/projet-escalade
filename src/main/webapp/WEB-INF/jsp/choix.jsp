@@ -6,84 +6,65 @@
 <head>
     <meta charset="UTF-8">
     <title>Gérer mes sorties</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
-    <h1>Gestion de mes sorties</h1>
-    <p>
-        Bonjour
-        <strong>
-            <c:out value="${membre.prenom}" />
-            <c:out value=" " />
-            <c:out value="${membre.nom}" />
-        </strong>
-    </p>
-    <p>
-        <a href="<c:url value='/home' />">Retour à l'accueil</a>
-    </p>
+<body class="min-h-screen bg-slate-100 text-slate-800">
+    <main class="mx-auto max-w-5xl px-4 py-10 md:px-6">
+        <header class="mb-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <h1 class="text-2xl font-extrabold text-slate-900 md:text-3xl">Gestion de mes sorties</h1>
+            <p class="mt-2 text-slate-600">
+                Bonjour
+                <strong>
+                    <c:out value="${membre.prenom}" />
+                    <c:out value=" " />
+                    <c:out value="${membre.nom}" />
+                </strong>
+            </p>
+            <div class="mt-5 flex flex-wrap gap-3">
+                <a href="<c:url value='/home' />" class="rounded-xl border border-slate-300 bg-white px-4 py-2 font-medium text-slate-700 transition hover:bg-slate-50">← Retour à l'accueil</a>
+                <a href="<c:url value='/choix/ajouter' />" class="rounded-xl bg-blue-600 px-4 py-2 font-semibold text-white transition hover:bg-blue-700">+ Créer une nouvelle sortie</a>
+            </div>
+        </header>
 
-    <p>
-        <a href="<c:url value='/choix/ajouter' />">Créer une nouvelle sortie</a>
-    </p>
+        <c:if test="${empty sorties}">
+            <div class="rounded-2xl border border-slate-200 bg-white p-6 text-center text-slate-600 shadow-sm">
+                Vous n'avez encore créé aucune sortie.
+            </div>
+        </c:if>
 
-    <c:if test="${empty sorties}">
-        <p>Vous n'avez encore créé aucune sortie.</p>
-    </c:if>
-    <c:if test="${not empty sorties}">
-        <h2>Mes sorties</h2>
-        <ul>
-            <c:forEach var="sortie" items="${sorties}">
+        <c:if test="${not empty sorties}">
+            <h2 class="mb-4 text-xl font-bold text-slate-900">Mes sorties</h2>
+            <ul class="space-y-4">
+                <c:forEach var="sortie" items="${sorties}">
+                    <li class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                        <p><strong>Nom :</strong> <c:out value="${sortie.nomSortie}" /></p>
+                        <p><strong>Description :</strong> <c:out value="${sortie.description}" /></p>
+                        <p><strong>Date :</strong> <c:out value="${sortie.dateSortie}" /></p>
+                        <p><strong>Catégorie :</strong> <c:out value="${sortie.categorie.categorieName}" /></p>
+                        <p>
+                            <strong>Site Web :</strong>
+                            <c:if test="${not empty sortie.siteWeb}">
+                                <a href="${sortie.siteWeb}" target="_blank" class="text-blue-600 underline hover:text-blue-700">Voir le site</a>
+                            </c:if>
+                            <c:if test="${empty sortie.siteWeb}">
+                                <span class="text-slate-500">Non disponible</span>
+                            </c:if>
+                        </p>
 
-                <li>
-                    <p>
-                        <strong>Nom :</strong>
-                        <c:out value="${sortie.nomSortie}" />
-                    </p>
-                    <p>
-                        <strong>Description :</strong>
-                        <c:out value="${sortie.description}" />
-                    </p>
-                    <p>
-                        <strong>Date :</strong>
-                        <c:out value="${sortie.dateSortie}" />
-                    </p>
-
-                    <p>
-                        <strong>Catégorie :</strong>
-                        <c:out value="${sortie.categorie.categorieName}" />
-                    </p>
-                    <p>
-                        <strong>Site Web :</strong>
-
-                        <c:if test="${not empty sortie.siteWeb}">
-                            <a href="${sortie.siteWeb}" target="_blank">
-                                Voir le site
+                        <div class="mt-4 flex flex-wrap gap-3">
+                            <a href="<c:url value='/choix/modifier/${sortie.sortieID}' />" class="rounded-lg border border-slate-300 bg-white px-3 py-2 text-sm font-medium text-slate-700 transition hover:bg-slate-50">
+                                Modifier
                             </a>
-                        </c:if>
 
-                        <c:if test="${empty sortie.siteWeb}">
-                            <span>Non disponible</span>
-                        </c:if>
-                    </p>
-
-                    <p>
-                        <a href="<c:url value='/choix/modifier/${sortie.sortieID}' />">
-                            Modifier
-                        </a>
-                    </p>
-
-                    <form action="<c:url value='/choix/supprimer/${sortie.sortieID}' />" method="post">
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                        <button type="submit">Supprimer</button>
-                    </form>
-                    <hr>
-
-                </li>
-
-            </c:forEach>
-
-        </ul>
-
-    </c:if>
-
+                            <form action="<c:url value='/choix/supprimer/${sortie.sortieID}' />" method="post">
+                                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                                <button type="submit" class="rounded-lg bg-rose-500/80 px-3 py-2 text-sm font-semibold text-white transition hover:bg-rose-500">Supprimer</button>
+                            </form>
+                        </div>
+                    </li>
+                </c:forEach>
+            </ul>
+        </c:if>
+    </main>
 </body>
 </html>

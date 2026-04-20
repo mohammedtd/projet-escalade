@@ -4,8 +4,10 @@
 /Users/mohammedtd/projet-escalade_toujad_benhila/src/main/java/club/dao/JpaCategorieDao.java
 /Users/mohammedtd/projet-escalade_toujad_benhila/src/main/java/club/dao/JpaMembreDAO.java
 /Users/mohammedtd/projet-escalade_toujad_benhila/src/main/java/club/dao/JpaSortieDao.java
+/Users/mohammedtd/projet-escalade_toujad_benhila/src/main/java/club/dao/JpaTokenDao.java
 /Users/mohammedtd/projet-escalade_toujad_benhila/src/main/java/club/dao/MembreDAO.java
 /Users/mohammedtd/projet-escalade_toujad_benhila/src/main/java/club/dao/SortieDAO.java
+/Users/mohammedtd/projet-escalade_toujad_benhila/src/main/java/club/dao/TokenDAO.java
 /Users/mohammedtd/projet-escalade_toujad_benhila/src/main/java/club/model/Categorie.java
 /Users/mohammedtd/projet-escalade_toujad_benhila/src/main/java/club/model/Membre.java
 /Users/mohammedtd/projet-escalade_toujad_benhila/src/main/java/club/model/PasswordResetToken.java
