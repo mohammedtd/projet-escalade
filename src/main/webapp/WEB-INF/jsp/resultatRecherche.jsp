@@ -7,54 +7,48 @@
 <head>
     <meta charset="UTF-8">
     <title>Résultat de recherche</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="min-h-screen bg-slate-100 text-slate-800">
+    <main class="mx-auto max-w-5xl px-4 py-10 md:px-6">
+        <header class="mb-8 flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:flex-row md:items-center md:justify-between">
+            <h1 class="text-2xl font-extrabold text-slate-900 md:text-3xl">Résultat de la recherche</h1>
+            <a href="<c:url value='/home' />" class="inline-flex items-center rounded-xl border border-slate-300 bg-white px-4 py-2 font-medium text-slate-700 transition hover:bg-slate-50">
+                ← Retour à l'accueil
+            </a>
+        </header>
 
-    <h1>Résultat de la recherche</h1>
+        <c:if test="${empty sorties}">
+            <div class="rounded-2xl border border-slate-200 bg-white p-6 text-center text-slate-600 shadow-sm">
+                Aucune sortie ne correspond à ce critère.
+            </div>
+        </c:if>
 
-    <p>
-        <a href="<c:url value='/home' />">Retour à l'accueil</a>
-    </p>
+        <c:if test="${not empty sorties}">
+            <ul class="space-y-4">
+                <c:forEach var="sortie" items="${sorties}">
+                    <li class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
+                        <a href="<c:url value='/sorties/${sortie.sortieID}' />" class="text-lg font-semibold text-slate-900 hover:text-blue-700 hover:underline">
+                            <c:out value="${sortie.nomSortie}" />
+                        </a>
 
-    <!-- Si aucune sortie ne correspond -->
-    <c:if test="${empty sorties}">
-        <p>Aucune sortie ne correspond à ce critère.</p>
-    </c:if>
+                        <div class="mt-3 space-y-1 text-slate-700">
+                            <p><strong>Date :</strong> <c:out value="${sortie.dateSortie}" /></p>
+                            <p><strong>Catégorie :</strong> <c:out value="${sortie.categorie.categorieName}" /></p>
 
-    <!-- Si des sorties existent -->
-    <c:if test="${not empty sorties}">
-        <ul>
-            <c:forEach var="sortie" items="${sorties}">
-                <li>
-                    <a href="<c:url value='/sorties/${sortie.sortieID}' />">
-                        <c:out value="${sortie.nomSortie}" />
-                    </a>
-
-                    <br>
-
-                    <strong>Date :</strong>
-                    <c:out value="${sortie.dateSortie}" />
-
-                    <br>
-
-                    <strong>Catégorie :</strong>
-                    <c:out value="${sortie.categorie.categorieName}" />
-
-                    <br>
-
-                    <sec:authorize access="isAuthenticated()">
-                        <strong>Créateur :</strong>
-                        <c:out value="${sortie.createur.prenom}" />
-                        <c:out value=" " />
-                        <c:out value="${sortie.createur.nom}" />
-                        <br>
-                    </sec:authorize>
-                </li>
-
-                <br>
-            </c:forEach>
-        </ul>
-    </c:if>
-
+                            <sec:authorize access="isAuthenticated()">
+                                <p>
+                                    <strong>Créateur :</strong>
+                                    <c:out value="${sortie.createur.prenom}" />
+                                    <c:out value=" " />
+                                    <c:out value="${sortie.createur.nom}" />
+                                </p>
+                            </sec:authorize>
+                        </div>
+                    </li>
+                </c:forEach>
+            </ul>
+        </c:if>
+    </main>
 </body>
 </html>
