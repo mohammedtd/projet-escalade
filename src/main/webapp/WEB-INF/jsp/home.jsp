@@ -26,7 +26,7 @@
                     <a href="<c:url value='/choix' />" class="rounded-xl border border-slate-200 bg-white px-4 py-3 font-medium text-slate-700 transition hover:bg-slate-50">Gérer mes sorties</a>
                     <form action="<c:url value='/logout' />" method="post" class="sm:col-span-2 lg:col-span-1">
                         <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                        <button type="submit" class="w-full rounded-xl bg-slate-700 px-4 py-3 font-semibold text-white transition hover:bg-slate-800">Se déconnecter</button>
+                        <button type="submit" class="w-full rounded-xl bg-red-500 px-4 py-3 font-semibold text-white transition hover:bg-red-800">Se déconnecter</button>
                     </form>
                 </sec:authorize>
             </div>
