@@ -38,19 +38,17 @@
             <form action="<c:url value='/sorties/search' />" method="get" class="grid gap-4 md:grid-cols-2">
                 <div>
                     <label for="nom" class="mb-2 block text-sm font-medium text-slate-700">Nom de la sortie</label>
-                    <select id="nom" name="nom" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none" required>
-                        <option value="">-- Toutes les sorties --</option>
-                        <c:forEach var="sortie" items="${sorties}">
-                            <option value="${sortie.nomSortie}">
-                                <c:out value="${sortie.nomSortie}" />
-                            </option>
-                        </c:forEach>
-                    </select>
+                    <input
+                        type="text"
+                        id="nom"
+                        name="nom"
+                        placeholder="Ex: falaise, montagne, initiation..."
+                        class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none">
                 </div>
 
                 <div>
                     <label for="categorieId" class="mb-2 block text-sm font-medium text-slate-700">Catégorie</label>
-                    <select id="categorieId" name="categorieId" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none" required>
+                    <select id="categorieId" name="categorieId" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none">
                         <option value="">-- Toutes les catégories --</option>
                         <c:forEach var="categorie" items="${categories}">
                             <option value="${categorie.categorieID}">
@@ -62,24 +60,22 @@
 
                 <div>
                     <label for="dateSortie" class="mb-2 block text-sm font-medium text-slate-700">Date de sortie</label>
-                    <input type="date" id="dateSortie" name="dateSortie" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none" required>
+                    <input type="date" id="dateSortie" name="dateSortie" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none">
                 </div>
 
-                <sec:authorize access="isAuthenticated()">
-                    <div>
-                        <label for="createurId" class="mb-2 block text-sm font-medium text-slate-700">Créateur</label>
-                        <select id="createurId" name="createurId" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none" required>
-                            <option value="">-- Tous les créateurs --</option>
-                            <c:forEach var="membre" items="${membres}">
-                                <option value="${membre.membreID}">
-                                    <c:out value="${membre.prenom}" />
-                                    <c:out value=" " />
-                                    <c:out value="${membre.nom}" />
-                                </option>
-                            </c:forEach>
-                        </select>
-                    </div>
-                </sec:authorize>
+                <div>
+                    <label for="createurId" class="mb-2 block text-sm font-medium text-slate-700">Créateur</label>
+                    <select id="createurId" name="createurId" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none">
+                        <option value="">-- Tous les créateurs --</option>
+                        <c:forEach var="membre" items="${membres}">
+                            <option value="${membre.membreID}">
+                                <c:out value="${membre.prenom}" />
+                                <c:out value=" " />
+                                <c:out value="${membre.nom}" />
+                            </option>
+                        </c:forEach>
+                    </select>
+                </div>
 
                 <div class="md:col-span-2">
                     <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700">

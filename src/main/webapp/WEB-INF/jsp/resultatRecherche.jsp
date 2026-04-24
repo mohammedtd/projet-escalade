@@ -37,12 +37,12 @@
                             <p><strong>Catégorie :</strong> <c:out value="${sortie.categorie.categorieName}" /></p>
 
                             <sec:authorize access="isAuthenticated()">
-                                <p>
-                                    <strong>Créateur :</strong>
-                                    <c:out value="${sortie.createur.prenom}" />
-                                    <c:out value=" " />
-                                    <c:out value="${sortie.createur.nom}" />
-                                </p>
+                            <p>
+                                <strong>Créateur :</strong>
+                                <c:out value="${sortie.createur.prenom}" />
+                                <c:out value=" " />
+                                <c:out value="${sortie.createur.nom}" />
+                            </p>
                             </sec:authorize>
                         </div>
                     </li>

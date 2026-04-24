@@ -39,7 +39,7 @@ public class SortieService {
         sortieDAO.delete(id);
     }
 
-    public List<Sortie> search(String nom, long categorieId, Long createurId, LocalDate dateSortie) {
+    public List<Sortie> search(String nom, Long categorieId, Long createurId, LocalDate dateSortie) {
         return sortieDAO.search(nom, categorieId, createurId, dateSortie);
     }
 }
