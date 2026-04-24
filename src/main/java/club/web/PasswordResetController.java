@@ -90,7 +90,7 @@ public class PasswordResetController {
 
         passwordResetTokenService.invalidate(token);
 
-        return "redirect:/login";
+        return "redirect:/login?resetSuccess=true";
     }
 
 }

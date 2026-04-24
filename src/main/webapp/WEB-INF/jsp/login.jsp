@@ -40,5 +40,29 @@
         </p>
     </form>
   </main>
+
+  <c:if test="${param.resetSuccess != null}">
+    <div id="resetSuccessPopup" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 px-4">
+      <div class="w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl">
+        <div class="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-emerald-100">
+          <svg class="h-8 w-8 text-emerald-600" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M20 6 9 17l-5-5"/>
+          </svg>
+        </div>
+        <h2 class="mt-4 text-center text-xl font-bold text-slate-900">Mot de passe modifié</h2>
+        <p class="mt-3 text-center text-slate-600">
+          Votre mot de passe a été changé avec succès.
+        </p>
+        <div class="mt-6 flex justify-center">
+          <button
+            type="button"
+            onclick="document.getElementById('resetSuccessPopup').classList.add('hidden')"
+            class="rounded-xl bg-emerald-600 px-5 py-2 font-semibold text-white transition hover:bg-emerald-700">
+            Fermer
+          </button>
+        </div>
+      </div>
+    </div>
+  </c:if>
 </body>
 </html>
