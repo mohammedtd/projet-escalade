@@ -1,7 +1,10 @@
 package club.config;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
@@ -15,27 +18,29 @@ import club.service.SortieService;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
-
   private final CategorieService categorieService;
   private final MembreService membreService;
   private final SortieService sortieService;
   private final PasswordEncoder passwordEncoder;
-
+  private final int nbCategories;
+  private final int nbMembres;
+  private final int nbSorties;
 
   public DataInitializer(CategorieService categorieService,
                          MembreService membreService,
                          SortieService sortieService,
-                         PasswordEncoder passwordEncoder) {
+                         PasswordEncoder passwordEncoder,
+                         @Value("${app.data.categories:30}") int nbCategories,
+                         @Value("${app.data.membres:250}") int nbMembres,
+                         @Value("${app.data.sorties:4000}") int nbSorties) {
     this.categorieService = categorieService;
     this.membreService = membreService;
     this.sortieService = sortieService;
     this.passwordEncoder = passwordEncoder;
-
+    this.nbCategories = nbCategories;
+    this.nbMembres = nbMembres;
+    this.nbSorties = nbSorties;
   }
-
-
-
-
 
   @Override
   public void run(String... args) {
@@ -46,80 +51,110 @@ public class DataInitializer implements CommandLineRunner {
       return;
     }
 
-    Categorie c1 = new Categorie();
-    c1.setCategorieName("Escalade sportive");
-    c1 = categorieService.createCategorie(c1);
-
-    Categorie c2 = new Categorie();
-    c2.setCategorieName("Alpinisme");
-    c2 = categorieService.createCategorie(c2);
-
-
-    Membre m1 = new Membre();
-    m1.setNom("Dupont");
-    m1.setPrenom("Jean");
-    m1.setEmail("jean@test.com");
-    m1.setMotDePasse(passwordEncoder.encode("1234"));
-    m1 = membreService.saveMembre(m1);
-
-    Membre m2 = new Membre();
-    m2.setNom("Martin");
-    m2.setPrenom("Alice");
-    m2.setEmail("alice@test.com");
-    m2.setMotDePasse(passwordEncoder.encode("1234"));
-    m2 = membreService.saveMembre(m2);
-
-
-
-    Sortie s1 = new Sortie();
-    s1.setNomSortie("Sortie Calanques");
-    s1.setDescription("Escalade en bord de mer");
-    s1.setDateSortie(LocalDate.now());
-    s1.setCategorie(c1);
-    s1.setCreateur(m1);
-    sortieService.saveSortie(s1);
-
-    Sortie s2 = new Sortie();
-    s2.setNomSortie("Sortie Mont Blanc");
-    s2.setDescription("Alpinisme en haute montagne");
-    s2.setDateSortie(LocalDate.now().plusDays(5));
-    s2.setCategorie(c2);
-    s2.setCreateur(m2);
-    sortieService.saveSortie(s2);
-
-    // Membre 4 : non créateur
-    Membre m4 = new Membre();
-    m4.setNom("Durand");
-    m4.setPrenom("Sophie");
-    m4.setEmail("sophie@test.com");
-    m4.setMotDePasse(passwordEncoder.encode("1234"));
-    m4 = membreService.saveMembre(m4);
-
-// Membre 5 : non créateur
-    Membre m5 = new Membre();
-    m5.setNom("Petit");
-    m5.setPrenom("Lucas");
-    m5.setEmail("lucas@test.com");
-    m5.setMotDePasse(passwordEncoder.encode("1234"));
-    m5 = membreService.saveMembre(m5);
-
-// Membre 6 : non créateur
-    Membre m6 = new Membre();
-    m6.setNom("Robert");
-    m6.setPrenom("Ines");
-    m6.setEmail("ines@test.com");
-    m6.setMotDePasse(passwordEncoder.encode("1234"));
-    m6 = membreService.saveMembre(m6);
-
-// Membre 7 : non créateur
-    Membre m7 = new Membre();
-    m7.setNom("Moreau");
-    m7.setPrenom("Yanis");
-    m7.setEmail("yanis@test.com");
-    m7.setMotDePasse(passwordEncoder.encode("1234"));
-    m7 = membreService.saveMembre(m7);
+    List<Categorie> categories = creerCategories();
+    List<Membre> membres = creerMembres();
+    creerSorties(categories, membres);
 
     System.out.println("=== Données initialisées ===");
     System.out.println("=== Nb catégories : " + categorieService.getAllCategories().size() + " ===");
+    System.out.println("=== Nb membres : " + membreService.getAllMembres().size() + " ===");
+    System.out.println("=== Nb sorties : " + sortieService.getAllSorties().size() + " ===");
+  }
+
+  private List<Categorie> creerCategories() {
+    String[] disciplines = {
+        "Escalade sportive",
+        "Alpinisme",
+        "Bloc",
+        "Grande voie",
+        "Via ferrata",
+        "Randonnée alpine",
+        "Escalade indoor",
+        "Initiation falaise",
+        "Cascade de glace",
+        "Perfectionnement technique"
+    };
+    String[] variantes = {
+        "Decouverte",
+        "Avancee",
+        "Panoramique",
+        "Nature",
+        "Technique",
+        "Collective"
+    };
+
+    List<Categorie> categories = new ArrayList<>();
+
+    for (int i = 0; i < nbCategories; i++) {
+      Categorie categorie = new Categorie();
+      String nom = i < disciplines.length
+          ? disciplines[i]
+          : disciplines[i % disciplines.length] + " " + variantes[(i / disciplines.length) % variantes.length];
+      categorie.setCategorieName(nom);
+      categories.add(categorieService.createCategorie(categorie));
+    }
+
+    return categories;
+  }
+
+  private List<Membre> creerMembres() {
+    String[] prenoms = {
+        "Jean", "Alice", "Sophie", "Lucas", "Ines", "Yanis", "Nora", "Hugo", "Lea", "Mehdi",
+        "Sarah", "Adam", "Jade", "Rayan", "Clara", "Louis", "Camille", "Noah", "Lina", "Tom"
+    };
+    String[] noms = {
+        "Dupont", "Martin", "Durand", "Petit", "Robert", "Moreau", "Garcia", "Bernard", "Thomas", "Richard",
+        "Diallo", "Roux", "Laurent", "Simon", "Michel", "Leroy", "Andre", "Marchand", "Faure", "Mercier"
+    };
+
+    List<Membre> membres = new ArrayList<>();
+
+    for (int i = 0; i < nbMembres; i++) {
+      Membre membre = new Membre();
+      membre.setPrenom(prenoms[i % prenoms.length]);
+      membre.setNom(noms[i % noms.length] + "-" + noms[(i / noms.length) % noms.length]);
+      membre.setEmail("membre" + (i + 1) + "@club.test");
+      membre.setMotDePasse(passwordEncoder.encode("1234"));
+      membres.add(membreService.saveMembre(membre));
+    }
+
+    return membres;
+  }
+
+  private void creerSorties(List<Categorie> categories, List<Membre> membres) {
+    String[] lieux = {
+        "Calanques", "Verdon", "Chamonix", "Fontainebleau", "Ceuse",
+        "Annecy", "Vercors", "Ecrins", "Ardeche", "Ailefroide"
+    };
+    String[] styles = {
+        "initiation", "technique", "decouverte", "perfectionnement", "falaise",
+        "montagne", "encadree", "collective", "sportive", "panoramique"
+    };
+    String[] rythmes = {
+        "du matin", "du week-end", "du club", "de printemps", "d'altitude",
+        "en pleine nature", "de progression", "entre membres", "sur roche", "en exterieur"
+    };
+    String[] formats = {
+        "Aventure", "Cap Vertical", "Evasion", "Horizons", "Ascension",
+        "Traversee", "Falaises", "Sommets", "Rochers", "Passerelle"
+    };
+
+    for (int i = 0; i < nbSorties; i++) {
+      Categorie categorie = categories.get(i % categories.size());
+      Membre createur = membres.get(i % membres.size());
+
+      Sortie sortie = new Sortie();
+      sortie.setNomSortie(formats[i % formats.length] + " " + lieux[(i / formats.length) % lieux.length]
+          + " " + rythmes[(i / (formats.length * lieux.length)) % rythmes.length]);
+      sortie.setDescription(
+          "Sortie " + styles[i % styles.length] + " organisee par le club dans la categorie "
+              + categorie.getCategorieName().toLowerCase() + ".");
+      sortie.setDateSortie(LocalDate.now().plusDays(i % 365));
+      sortie.setCategorie(categorie);
+      sortie.setCreateur(createur);
+      sortie.setSiteWeb("https://club-escalade.test/sorties/" + (i + 1));
+
+      sortieService.saveSortie(sortie);
+    }
   }
 }
