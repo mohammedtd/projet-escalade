@@ -11,8 +11,18 @@
 <body class="min-h-screen bg-slate-100 text-slate-800">
     <main class="mx-auto max-w-6xl px-4 py-8 md:px-6 md:py-10">
         <header class="mb-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h1 class="text-2xl font-extrabold text-slate-900 md:text-4xl">Bienvenue sur le catalogue des sorties du club d'escalade</h1>
-            <p class="mt-2 text-slate-600">Un espace clair pour explorer, filtrer et gérer les sorties.</p>
+            <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
+                <div>
+                    <h1 class="text-2xl font-extrabold text-slate-900 md:text-4xl">Bienvenue sur le catalogue des sorties du club d'escalade</h1>
+                    <p class="mt-2 text-slate-600">Un espace clair pour explorer, filtrer et gérer les sorties.</p>
+                </div>
+
+                <sec:authorize access="!isAuthenticated()">
+                    <a href="<c:url value='/login' />" class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-7 py-3 font-semibold text-white transition hover:bg-blue-700">
+                        Se connecter
+                    </a>
+                </sec:authorize>
+            </div>
         </header>
 
         <section class="mb-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
