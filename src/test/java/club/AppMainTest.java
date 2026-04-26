@@ -1,13 +1,12 @@
-
+package club;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@SpringBootTest
+@SpringBootTest(classes = AppMain.class)
 class AppMainTest {
 
   @Test
-  void contextLoads() {
+  void demarrerLeContexteSpring() {
   }
-
 }
