@@ -72,7 +72,7 @@
                     <label for="dateSortie" class="mb-2 block text-sm font-medium text-slate-700">Date de sortie</label>
                     <input type="date" id="dateSortie" name="dateSortie" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none">
                 </div>
-
+                <sec:authorize access="isAuthenticated()">
                 <div>
                     <label for="createurId" class="mb-2 block text-sm font-medium text-slate-700">Créateur</label>
                     <select id="createurId" name="createurId" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none">
@@ -86,6 +86,7 @@
                         </c:forEach>
                     </select>
                 </div>
+                </sec:authorize>
 
                 <div class="md:col-span-2">
                     <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700">

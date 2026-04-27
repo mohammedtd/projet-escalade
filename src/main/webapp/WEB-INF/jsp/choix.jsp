@@ -58,7 +58,7 @@
 
                             <form action="<c:url value='/choix/supprimer/${sortie.sortieID}' />" method="post">
                                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                                <button type="submit" class="rounded-lg bg-rose-500/80 px-3 py-2 text-sm font-semibold text-white transition hover:bg-rose-500">Supprimer</button>
+                                <button type="submit" class="rounded-lg bg-red-700/80 px-3 py-2 text-sm font-semibold text-white transition hover:bg-rose-500">Supprimer</button>
                             </form>
                         </div>
                     </li>

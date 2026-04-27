@@ -18,6 +18,8 @@ import club.service.SortieService;
 
 @Component
 public class DataInitializer implements CommandLineRunner {
+  private static final int POURCENTAGE_CREATEURS = 70;
+
   private final CategorieService categorieService;
   private final MembreService membreService;
   private final SortieService sortieService;
@@ -55,10 +57,15 @@ public class DataInitializer implements CommandLineRunner {
     List<Membre> membres = creerMembres();
     creerSorties(categories, membres);
 
+  int nbCreateurs = Math.max(1, (membres.size() * POURCENTAGE_CREATEURS) / 100);
+  int nbNonCreateurs = Math.max(0, membres.size() - nbCreateurs);
+
     System.out.println("=== Données initialisées ===");
     System.out.println("=== Nb catégories : " + categorieService.getAllCategories().size() + " ===");
     System.out.println("=== Nb membres : " + membreService.getAllMembres().size() + " ===");
     System.out.println("=== Nb sorties : " + sortieService.getAllSorties().size() + " ===");
+  System.out.println("=== Nb membres créateurs : " + nbCreateurs + " ===");
+  System.out.println("=== Nb membres non créateurs : " + nbNonCreateurs + " ===");
   }
 
   private List<Categorie> creerCategories() {
@@ -139,9 +146,11 @@ public class DataInitializer implements CommandLineRunner {
         "Traversee", "Falaises", "Sommets", "Rochers", "Passerelle"
     };
 
+    int nbCreateurs = Math.max(1, (membres.size() * POURCENTAGE_CREATEURS) / 100);
+
     for (int i = 0; i < nbSorties; i++) {
       Categorie categorie = categories.get(i % categories.size());
-      Membre createur = membres.get(i % membres.size());
+      Membre createur = membres.get(i % nbCreateurs);
 
       Sortie sortie = new Sortie();
       sortie.setNomSortie(formats[i % formats.length] + " " + lieux[(i / formats.length) % lieux.length]
