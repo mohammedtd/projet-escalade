@@ -2,6 +2,8 @@ package club.web;
 
 import java.security.Principal;
 import java.time.LocalDate;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Optional;
 
 import club.service.CategorieService;
@@ -36,8 +38,12 @@ public class ChoixController {
 
       Membre membre = membreOpt.get();
 
+      List<Sortie> sortiesTriees = membre.getSorties().stream()
+          .sorted(Comparator.comparingLong(Sortie::getSortieID).reversed())
+          .toList();
+
       model.addAttribute("membre", membre);
-      model.addAttribute("sorties", membre.getSorties());
+      model.addAttribute("sorties", sortiesTriees);
     }
 
     return "choix";

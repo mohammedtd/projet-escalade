@@ -19,7 +19,7 @@ public class JpaSortieDao implements SortieDAO  {
 
     @Override
     public List<Sortie> findAll() {
-        return sortieRepository.findAll();
+        return sortieRepository.findAllByOrderBySortieIDDesc();
     }
 
     @Override
