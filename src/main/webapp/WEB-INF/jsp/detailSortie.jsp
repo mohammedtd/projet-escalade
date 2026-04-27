@@ -48,6 +48,26 @@
                         <span class="text-slate-500">Non disponible</span>
                     </c:if>
                 </p>
+
+                <div class="mt-5 border-t border-slate-200 pt-4">
+                    <c:if test="${estInscrit}">
+                        <form action="<c:url value='/sorties/${sortie.sortieID}/quitter' />" method="post" class="inline-block">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                            <button type="submit" class="rounded-xl bg-rose-600 px-4 py-2 font-semibold text-white transition hover:bg-rose-700">
+                                Quitter cette sortie
+                            </button>
+                        </form>
+                    </c:if>
+
+                    <c:if test="${not estInscrit}">
+                        <form action="<c:url value='/sorties/${sortie.sortieID}/rejoindre' />" method="post" class="inline-block">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                            <button type="submit" class="rounded-xl bg-emerald-600 px-4 py-2 font-semibold text-white transition hover:bg-emerald-700">
+                                Rejoindre cette sortie
+                            </button>
+                        </form>
+                    </c:if>
+                </div>
             </sec:authorize>
         </section>
     </main>

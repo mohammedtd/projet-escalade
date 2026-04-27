@@ -38,12 +38,19 @@ public class ChoixController {
 
       Membre membre = membreOpt.get();
 
-      List<Sortie> sortiesTriees = membre.getSorties().stream()
+      List<Sortie> sortiesCreees = membre.getSorties().stream()
+          .sorted(Comparator.comparingLong(Sortie::getSortieID).reversed())
+          .toList();
+
+      List<Sortie> sortiesRejointes = sortieService.getAllSorties().stream()
+          .filter(sortie -> sortieService.estInscrit(sortie, membre))
+          .filter(sortie -> sortie.getCreateur() == null || sortie.getCreateur().getMembreID() != membre.getMembreID())
           .sorted(Comparator.comparingLong(Sortie::getSortieID).reversed())
           .toList();
 
       model.addAttribute("membre", membre);
-      model.addAttribute("sorties", sortiesTriees);
+      model.addAttribute("sortiesCreees", sortiesCreees);
+      model.addAttribute("sortiesRejointes", sortiesRejointes);
     }
 
     return "choix";
