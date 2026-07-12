@@ -1,110 +1,75 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<!-- Tag Spring Security pour gérer connecté / non connecté -->
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title><c:out value="${sortie.nomSortie}"/> — Détail</title>
-  <link rel="stylesheet" href="<c:url value='/css/style.css'/>">
+    <meta charset="UTF-8">
+    <title>Détail de la sortie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="min-h-screen bg-slate-100 text-slate-800">
+    <main class="mx-auto max-w-4xl px-4 py-10 md:px-6">
+        <header class="mb-6 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <h1 class="text-2xl font-extrabold text-slate-900 md:text-3xl">
+                Détail de la sortie :
+                <c:out value="${sortie.nomSortie}" />
+            </h1>
+            <div class="mt-4 flex flex-wrap gap-3">
+                <a href="<c:url value='/sorties' />" class="rounded-xl border border-slate-300 bg-white px-4 py-2 font-medium text-slate-700 transition hover:bg-slate-50">← Retour aux sorties</a>
+                <a href="<c:url value='/home' />" class="rounded-xl border border-slate-300 bg-white px-4 py-2 font-medium text-slate-700 transition hover:bg-slate-50">⌂ Retour à l'accueil</a>
+            </div>
+        </header>
 
-  <nav class="navbar">
-    <a class="nav-brand" href="<c:url value='/home'/>">
-      <div class="nav-brand-icon">🧗</div>
-      Club Escalade
-    </a>
-    <div class="nav-links">
-      <a class="nav-link" href="<c:url value='/sorties'/>">← Sorties</a>
-      <a class="nav-link" href="<c:url value='/home'/>">Accueil</a>
-    </div>
-  </nav>
+        <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <p><strong>Nom :</strong> <c:out value="${sortie.nomSortie}" /></p>
+            <p><strong>Description :</strong> <c:out value="${sortie.description}" /></p>
+            <p><strong>Date :</strong> <c:out value="${sortie.dateSortie}" /></p>
+            <p><strong>Catégorie :</strong> <c:out value="${sortie.categorie.categorieName}" /></p>
 
-  <div class="page page-sm">
+            <sec:authorize access="isAuthenticated()">
+                <p>
+                    <strong>Créateur :</strong>
+                    <c:out value="${sortie.createur.prenom}" />
+                    <c:out value=" " />
+                    <c:out value="${sortie.createur.nom}" />
+                </p>
 
-    <div class="page-header anim">
-      <div>
-        <div class="breadcrumb" style="margin-bottom:8px;">
-          <a href="<c:url value='/home'/>">Accueil</a>
-          <span class="breadcrumb-sep">›</span>
-          <a href="<c:url value='/sorties'/>">Sorties</a>
-          <span class="breadcrumb-sep">›</span>
-          <span>Détail</span>
-        </div>
-        <span class="badge">⛰️ Détail de la sortie</span>
-      </div>
-    </div>
+                <p>
+                    <strong>Site Web :</strong>
+                    <c:if test="${not empty sortie.siteWeb}">
+                        <a href="${sortie.siteWeb}" target="_blank" class="text-blue-600 underline hover:text-blue-700">Voir le site</a>
+                    </c:if>
 
-    <div class="card anim" style="margin-bottom:1.5rem;">
-      <h1 class="page-title" style="margin-bottom:20px;"><c:out value="${sortie.nomSortie}"/></h1>
+                    <c:if test="${empty sortie.siteWeb}">
+                        <span class="text-slate-500">Non disponible</span>
+                    </c:if>
+                </p>
 
-      <div class="detail-fields">
-        <div class="detail-field">
-          <span class="detail-label">Description</span>
-          <span class="detail-value"><c:out value="${sortie.description}"/></span>
-        </div>
-        <div class="detail-field">
-          <span class="detail-label">Date</span>
-          <span class="detail-value">📅 <c:out value="${sortie.dateSortie}"/></span>
-        </div>
-        <div class="detail-field">
-          <span class="detail-label">Catégorie</span>
-          <span class="detail-value">
-            <a href="<c:url value='/categories/${sortie.categorie.categorieID}'/>" class="badge badge-blue" style="font-size:0.8rem;">
-              🏔️ <c:out value="${sortie.categorie.categorieName}"/>
-            </a>
-          </span>
-        </div>
+                <div class="mt-5 border-t border-slate-200 pt-4">
+                    <c:if test="${estInscrit}">
+                        <form action="<c:url value='/sorties/${sortie.sortieID}/quitter' />" method="post" class="inline-block">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                            <button type="submit" class="rounded-xl bg-rose-600 px-4 py-2 font-semibold text-white transition hover:bg-rose-700">
+                                Quitter cette sortie
+                            </button>
+                        </form>
+                    </c:if>
 
-        <sec:authorize access="isAuthenticated()">
-          <div class="detail-field">
-            <span class="detail-label">Créateur</span>
-            <span class="detail-value">👤 <c:out value="${sortie.createur.prenom}"/> <c:out value="${sortie.createur.nom}"/></span>
-          </div>
-          <div class="detail-field">
-            <span class="detail-label">Site web</span>
-            <span class="detail-value">
-              <c:if test="${not empty sortie.siteWeb}">
-                <a href="${sortie.siteWeb}" target="_blank" style="color:var(--blue);">🔗 Voir le site</a>
-              </c:if>
-              <c:if test="${empty sortie.siteWeb}">
-                <span style="color:var(--text3);">Non disponible</span>
-              </c:if>
-            </span>
-          </div>
-        </sec:authorize>
-      </div>
-    </div>
-
-    <sec:authorize access="isAuthenticated()">
-      <div class="card anim anim-d1">
-        <div class="section-title" style="margin-bottom:16px;">Participation</div>
-        <c:if test="${estInscrit}">
-          <div class="badge badge-green" style="margin-bottom:16px;">✅ Vous participez à cette sortie</div>
-          <form action="<c:url value='/sorties/${sortie.sortieID}/quitter'/>" method="post">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-            <button type="submit" class="btn btn-danger">🚪 Quitter cette sortie</button>
-          </form>
-        </c:if>
-        <c:if test="${not estInscrit}">
-          <p style="color:var(--text2);font-size:0.9rem;margin-bottom:16px;">Rejoignez cette sortie pour participer avec le club.</p>
-          <form action="<c:url value='/sorties/${sortie.sortieID}/rejoindre'/>" method="post">
-            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
-            <button type="submit" class="btn btn-success">🧗 Rejoindre cette sortie</button>
-          </form>
-        </c:if>
-      </div>
-    </sec:authorize>
-
-    <sec:authorize access="!isAuthenticated()">
-      <div class="card anim anim-d1" style="text-align:center;">
-        <p style="color:var(--text2);margin-bottom:16px;">Connectez-vous pour rejoindre cette sortie.</p>
-        <a href="<c:url value='/login'/>" class="btn btn-primary">Se connecter</a>
-      </div>
-    </sec:authorize>
-
-  </div>
+                    <c:if test="${not estInscrit}">
+                        <form action="<c:url value='/sorties/${sortie.sortieID}/rejoindre' />" method="post" class="inline-block">
+                            <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+                            <button type="submit" class="rounded-xl bg-emerald-600 px-4 py-2 font-semibold text-white transition hover:bg-emerald-700">
+                                Rejoindre cette sortie
+                            </button>
+                        </form>
+                    </c:if>
+                </div>
+            </sec:authorize>
+        </section>
+    </main>
 </body>
 </html>

@@ -1,62 +1,48 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sorties — <c:out value="${categorie.categorieName}"/></title>
-  <link rel="stylesheet" href="<c:url value='/css/style.css'/>">
+    <meta charset="UTF-8">
+    <title>Sorties de la catégorie</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="min-h-screen bg-slate-100 text-slate-800">
+    <main class="mx-auto max-w-4xl px-4 py-10 md:px-6">
+        <header class="mb-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
+            <h1 class="text-2xl font-extrabold text-slate-900 md:text-3xl">
+                Sorties de la catégorie :
+                <c:out value="${categorie.categorieName}" />
+            </h1>
+            <div class="mt-4 flex flex-wrap gap-3">
+                <a href="<c:url value='/categories' />" class="rounded-xl border border-slate-300 bg-white px-4 py-2 font-medium text-slate-700 transition hover:bg-slate-50">← Retour aux catégories</a>
+                <a href="<c:url value='/home' />" class="rounded-xl border border-slate-300 bg-white px-4 py-2 font-medium text-slate-700 transition hover:bg-slate-50">⌂ Retour à l'accueil</a>
+            </div>
+        </header>
 
-  <nav class="navbar">
-    <a class="nav-brand" href="<c:url value='/home'/>">
-      <div class="nav-brand-icon">🧗</div>
-      Club Escalade
-    </a>
-    <div class="nav-links">
-      <a class="nav-link" href="<c:url value='/categories'/>">← Catégories</a>
-      <a class="nav-link" href="<c:url value='/home'/>">Accueil</a>
-    </div>
-  </nav>
+        <c:if test="${empty sorties}">
+            <div class="rounded-2xl border border-slate-200 bg-white p-6 text-center text-slate-600 shadow-sm">
+                Aucune sortie trouvée pour cette catégorie.
+            </div>
+        </c:if>
 
-  <div class="page">
-
-    <div class="page-header anim">
-      <div>
-        <div class="breadcrumb" style="margin-bottom:8px;">
-          <a href="<c:url value='/home'/>">Accueil</a>
-          <span class="breadcrumb-sep">›</span>
-          <a href="<c:url value='/categories'/>">Catégories</a>
-          <span class="breadcrumb-sep">›</span>
-          <span><c:out value="${categorie.categorieName}"/></span>
-        </div>
-        <h1 class="page-title"><c:out value="${categorie.categorieName}"/></h1>
-      </div>
-      <div class="badge">⛰️ ${sorties.size()} sortie<c:if test="${sorties.size() > 1}">s</c:if></div>
-    </div>
-
-    <c:if test="${empty sorties}">
-      <div class="empty anim">
-        <div class="empty-icon">🏔️</div>
-        <div class="empty-text">Aucune sortie dans cette catégorie pour le moment.</div>
-      </div>
-    </c:if>
-
-    <div style="display:flex;flex-direction:column;gap:8px;">
-      <c:forEach var="sortie" items="${sorties}" varStatus="st">
-        <a href="<c:url value='/sorties/${sortie.sortieID}'/>" class="trip-row anim" style="animation-delay:${st.index * 0.03}s">
-          <div>
-            <div class="trip-row-name"><c:out value="${sortie.nomSortie}"/></div>
-            <div class="trip-row-meta">📅 <c:out value="${sortie.dateSortie}"/></div>
-          </div>
-          <span class="trip-row-arrow">→</span>
-        </a>
-      </c:forEach>
-    </div>
-
-  </div>
+        <c:if test="${not empty sorties}">
+            <ul class="space-y-4">
+                <c:forEach var="sortie" items="${sorties}">
+                    <li>
+                        <a href="<c:url value='/sorties/${sortie.sortieID}' />"
+                           class="group flex items-center justify-between gap-3 rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:bg-blue-50/40">
+                            <span class="truncate text-lg font-semibold text-slate-900">
+                                <c:out value="${sortie.nomSortie}" />
+                            </span>
+                            <span class="text-blue-600 transition group-hover:translate-x-1">→</span>
+                        </a>
+                    </li>
+                </c:forEach>
+            </ul>
+        </c:if>
+    </main>
 </body>
 </html>

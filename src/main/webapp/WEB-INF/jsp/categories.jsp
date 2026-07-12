@@ -3,57 +3,42 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Catégories — Club Escalade</title>
-  <link rel="stylesheet" href="<c:url value='/css/style.css'/>">
+    <meta charset="UTF-8">
+    <title>Liste des catégories</title>
+    <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body>
+<body class="min-h-screen bg-slate-100 text-slate-800">
+    <main class="mx-auto max-w-4xl px-4 py-10 md:px-6">
+        <header class="mb-8 flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:flex-row md:items-center md:justify-between">
+            <h1 class="text-2xl font-extrabold text-slate-900 md:text-3xl">Liste des catégories</h1>
+            <a href="<c:url value='/home' />" class="inline-flex items-center rounded-xl border border-slate-300 bg-white px-4 py-2 font-medium text-slate-700 transition hover:bg-slate-50">
+                ← Retour à l'accueil
+            </a>
+        </header>
 
-  <nav class="navbar">
-    <a class="nav-brand" href="<c:url value='/home'/>">
-      <div class="nav-brand-icon">🧗</div>
-      Club Escalade
-    </a>
-    <div class="nav-links">
-      <a class="nav-link" href="<c:url value='/sorties'/>">Sorties</a>
-      <a class="nav-link" href="<c:url value='/home'/>">Accueil</a>
-    </div>
-  </nav>
+        <c:if test="${empty categories}">
+            <div class="rounded-2xl border border-slate-200 bg-white p-6 text-center text-slate-600 shadow-sm">
+                Aucune catégorie disponible.
+            </div>
+        </c:if>
 
-  <div class="page">
-
-    <div class="page-header anim">
-      <div>
-        <div class="breadcrumb" style="margin-bottom:8px;">
-          <a href="<c:url value='/home'/>">Accueil</a>
-          <span class="breadcrumb-sep">›</span>
-          <span>Catégories</span>
-        </div>
-        <h1 class="page-title">Catégories</h1>
-      </div>
-      <div class="badge">${categories.size()} catégories</div>
-    </div>
-
-    <c:if test="${empty categories}">
-      <div class="empty anim">
-        <div class="empty-icon">🏔️</div>
-        <div class="empty-text">Aucune catégorie disponible pour le moment.</div>
-      </div>
-    </c:if>
-
-    <div class="grid-2">
-      <c:forEach var="cat" items="${categories}" varStatus="st">
-        <a href="<c:url value='/categories/${cat.categorieID}'/>" class="cat-card anim" style="animation-delay:${st.index * 0.04}s">
-          <div>
-            <div class="cat-card-name"><c:out value="${cat.categorieName}"/></div>
-            <div style="font-size:0.78rem;color:var(--text3);margin-top:3px;">Voir les sorties</div>
-          </div>
-          <span class="cat-card-arrow">→</span>
-        </a>
-      </c:forEach>
-    </div>
-
-  </div>
+        <c:if test="${not empty categories}">
+            <ul class="grid gap-4 sm:grid-cols-2">
+                <c:forEach var="categorie" items="${categories}">
+                    <li>
+                        <a href="<c:url value='/categories/${categorie.categorieID}' />"
+                           class="group block rounded-2xl border border-slate-200 bg-white p-5 shadow-sm transition hover:-translate-y-0.5 hover:border-blue-200 hover:bg-blue-50/40">
+                            <div class="flex items-center justify-between gap-3">
+                                <span class="truncate text-lg font-semibold text-slate-900">
+                                    <c:out value="${categorie.categorieName}" />
+                                </span>
+                                <span class="text-blue-600 transition group-hover:translate-x-1">→</span>
+                            </div>
+                        </a>
+                    </li>
+                </c:forEach>
+            </ul>
+        </c:if>
+    </main>
 </body>
 </html>
