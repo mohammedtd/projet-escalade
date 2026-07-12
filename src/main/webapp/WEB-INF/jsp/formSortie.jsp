@@ -3,54 +3,93 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Formulaire sortie</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Formulaire sortie — Club Escalade</title>
+  <link rel="stylesheet" href="<c:url value='/css/style.css'/>">
 </head>
-<body class="min-h-screen bg-slate-100 text-slate-800">
-    <main class="mx-auto max-w-3xl px-4 py-10 md:px-6">
-        <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h1 class="mb-6 text-2xl font-extrabold text-slate-900 md:text-3xl">Formulaire sortie</h1>
+<body>
 
-            <form method="post" class="space-y-4">
-                <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
+  <nav class="navbar">
+    <a class="nav-brand" href="<c:url value='/home'/>">
+      <div class="nav-brand-icon">🧗</div>
+      Club Escalade
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="<c:url value='/choix'/>">← Mes sorties</a>
+    </div>
+  </nav>
 
-                <div>
-                    <label class="mb-2 block text-sm font-medium text-slate-700" for="nomSortie">Nom</label>
-                    <input id="nomSortie" type="text" name="nomSortie" value="${sortie.nomSortie}" required class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none" />
-                </div>
+  <div class="page page-sm">
 
-                <div>
-                    <label class="mb-2 block text-sm font-medium text-slate-700" for="description">Description</label>
-                    <input id="description" type="text" name="description" value="${sortie.description}" required class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none" />
-                </div>
+    <div class="page-header anim">
+      <div>
+        <div class="breadcrumb" style="margin-bottom:8px;">
+          <a href="<c:url value='/home'/>">Accueil</a>
+          <span class="breadcrumb-sep">›</span>
+          <a href="<c:url value='/choix'/>">Mes sorties</a>
+          <span class="breadcrumb-sep">›</span>
+          <span>Formulaire</span>
+        </div>
+        <h1 class="page-title">
+          <c:if test="${empty sortie.sortieID}">Créer une sortie</c:if>
+          <c:if test="${not empty sortie.sortieID}">Modifier la sortie</c:if>
+        </h1>
+      </div>
+    </div>
 
-                <div>
-                    <label class="mb-2 block text-sm font-medium text-slate-700" for="siteWeb">Site Web</label>
-                    <input id="siteWeb" type="text" name="siteWeb" value="${sortie.siteWeb}" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none" />
-                </div>
+    <div class="card anim">
+      <form method="post" class="form-stack">
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
 
-                <div>
-                    <label class="mb-2 block text-sm font-medium text-slate-700" for="dateSortie">Date</label>
-                    <input id="dateSortie" type="date" name="dateSortie" value="${sortie.dateSortie}" required class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none" />
-                </div>
+        <div class="form-grid">
+          <div class="form-group" style="grid-column:1/-1;">
+            <label class="form-label" for="nomSortie">Nom de la sortie *</label>
+            <input id="nomSortie" class="form-input" type="text" name="nomSortie"
+                   value="<c:out value='${sortie.nomSortie}'/>" placeholder="Ex: Aventure Calanques..." required>
+          </div>
 
-                <div>
-                    <label class="mb-2 block text-sm font-medium text-slate-700" for="categorieId">Catégorie</label>
-                    <select id="categorieId" name="categorieId" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none">
-                        <c:forEach var="cat" items="${categories}">
-                            <option value="${cat.categorieID}">
-                                ${cat.categorieName}
-                            </option>
-                        </c:forEach>
-                    </select>
-                </div>
+          <div class="form-group" style="grid-column:1/-1;">
+            <label class="form-label" for="description">Description *</label>
+            <textarea id="description" class="form-input form-textarea" name="description"
+                      placeholder="Décrivez la sortie, le niveau requis, l'équipement..."><c:out value="${sortie.description}"/></textarea>
+          </div>
 
-                <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700">
-                    Valider
-                </button>
-            </form>
-        </section>
-    </main>
+          <div class="form-group">
+            <label class="form-label" for="dateSortie">Date *</label>
+            <input id="dateSortie" class="form-input" type="date" name="dateSortie"
+                   value="<c:out value='${sortie.dateSortie}'/>" required>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label" for="categorieId">Catégorie *</label>
+            <select id="categorieId" class="form-select" name="categorieId">
+              <c:forEach var="cat" items="${categories}">
+                <option value="${cat.categorieID}"
+                  <c:if test="${sortie.categorie != null && sortie.categorie.categorieID == cat.categorieID}">selected</c:if>>
+                  <c:out value="${cat.categorieName}"/>
+                </option>
+              </c:forEach>
+            </select>
+          </div>
+
+          <div class="form-group" style="grid-column:1/-1;">
+            <label class="form-label" for="siteWeb">Site Web (optionnel)</label>
+            <input id="siteWeb" class="form-input" type="url" name="siteWeb"
+                   value="<c:out value='${sortie.siteWeb}'/>" placeholder="https://...">
+          </div>
+        </div>
+
+        <div style="display:flex;gap:10px;margin-top:8px;">
+          <button type="submit" class="btn btn-primary btn-lg">
+            <c:if test="${empty sortie.sortieID}">✅ Créer la sortie</c:if>
+            <c:if test="${not empty sortie.sortieID}">💾 Sauvegarder</c:if>
+          </button>
+          <a href="<c:url value='/choix'/>" class="btn btn-ghost btn-lg">Annuler</a>
+        </div>
+      </form>
+    </div>
+
+  </div>
 </body>
 </html>

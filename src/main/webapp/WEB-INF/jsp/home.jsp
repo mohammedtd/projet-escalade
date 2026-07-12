@@ -4,97 +4,129 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Accueil - Club d'escalade</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tableau de bord — Club Escalade</title>
+  <link rel="stylesheet" href="<c:url value='/css/style.css'/>">
 </head>
-<body class="min-h-screen bg-slate-100 text-slate-800">
-    <main class="mx-auto max-w-6xl px-4 py-8 md:px-6 md:py-10">
-        <header class="mb-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <div class="flex flex-col gap-4 md:flex-row md:items-start md:justify-between">
-                <div>
-                    <h1 class="text-2xl font-extrabold text-slate-900 md:text-4xl">Bienvenue sur le catalogue des sorties du club d'escalade</h1>
-                    <p class="mt-2 text-slate-600">Un espace clair pour explorer, filtrer et gérer les sorties.</p>
-                </div>
+<body>
 
-                <sec:authorize access="!isAuthenticated()">
-                    <a href="<c:url value='/login' />" class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-7 py-3 font-semibold text-white transition hover:bg-blue-700">
-                        Se connecter
-                    </a>
-                </sec:authorize>
-            </div>
-        </header>
+  <!-- Navbar -->
+  <nav class="navbar">
+    <a class="nav-brand" href="<c:url value='/home'/>">
+      <div class="nav-brand-icon">🧗</div>
+      Club Escalade
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="<c:url value='/categories'/>">Catégories</a>
+      <a class="nav-link" href="<c:url value='/sorties'/>">Sorties</a>
+      <sec:authorize access="isAuthenticated()">
+        <a class="nav-link" href="<c:url value='/createur'/>">Créateurs</a>
+        <a class="nav-link" href="<c:url value='/choix'/>">Mes sorties</a>
+        <form action="<c:url value='/logout'/>" method="post" style="display:inline">
+          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+          <button type="submit" class="nav-link" style="cursor:pointer;background:none;border:none;font-size:inherit;">Déconnexion</button>
+        </form>
+      </sec:authorize>
+      <sec:authorize access="!isAuthenticated()">
+        <a class="nav-link nav-link-btn" href="<c:url value='/login'/>">Se connecter</a>
+      </sec:authorize>
+    </div>
+  </nav>
 
-        <section class="mb-8 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 class="mb-4 text-xl font-bold text-slate-900">Navigation</h2>
-            <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-                <a href="<c:url value='/categories' />" class="rounded-xl border border-slate-200 bg-white px-4 py-3 font-medium text-slate-700 transition hover:bg-slate-50">Voir les catégories</a>
-                <a href="<c:url value='/sorties' />" class="rounded-xl border border-slate-200 bg-white px-4 py-3 font-medium text-slate-700 transition hover:bg-slate-50">Voir les sorties</a>
+  <div class="page">
 
-                <sec:authorize access="isAuthenticated()">
-                    <a href="<c:url value='/createur' />" class="rounded-xl border border-slate-200 bg-white px-4 py-3 font-medium text-slate-700 transition hover:bg-slate-50">Créateurs & sorties</a>
-                    <a href="<c:url value='/choix' />" class="rounded-xl border border-slate-200 bg-white px-4 py-3 font-medium text-slate-700 transition hover:bg-slate-50">Gérer mes sorties</a>
-                    <form action="<c:url value='/logout' />" method="post" class="sm:col-span-2 lg:col-span-1">
-                        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
-                        <button type="submit" class="w-full rounded-xl bg-red-500 px-4 py-3 font-semibold text-white transition hover:bg-red-800">Se déconnecter</button>
-                    </form>
-                </sec:authorize>
-            </div>
-        </section>
+    <!-- Header -->
+    <div class="page-header anim">
+      <div>
+        <div class="badge" style="margin-bottom:10px;">🏔️ Tableau de bord</div>
+        <h1 class="page-title">Bienvenue au club</h1>
+      </div>
+    </div>
 
-        <section class="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-            <h2 class="mb-5 text-xl font-bold text-slate-900">Recherche de sorties</h2>
+    <!-- Stats row -->
+    <div class="grid-3 anim anim-d1" style="margin-bottom:1.5rem;">
+      <div class="stat-card">
+        <div class="stat-value">${sorties.size()}</div>
+        <div class="stat-label">Sorties disponibles</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">${categories.size()}</div>
+        <div class="stat-label">Catégories</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-value">${membres.size()}</div>
+        <div class="stat-label">Créateurs actifs</div>
+      </div>
+    </div>
 
-            <form action="<c:url value='/sorties/search' />" method="get" class="grid gap-4 md:grid-cols-2">
-                <div>
-                    <label for="nom" class="mb-2 block text-sm font-medium text-slate-700">Nom de la sortie</label>
-                    <input
-                        type="text"
-                        id="nom"
-                        name="nom"
-                        placeholder="Ex: falaise, montagne, initiation..."
-                        class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none">
-                </div>
+    <!-- Navigation tiles -->
+    <div class="section-title anim anim-d2">Navigation rapide</div>
+    <div class="nav-grid anim anim-d2">
+      <a href="<c:url value='/categories'/>" class="nav-tile">
+        <span class="nav-tile-icon">🏔️</span> Catégories
+      </a>
+      <a href="<c:url value='/sorties'/>" class="nav-tile">
+        <span class="nav-tile-icon">⛰️</span> Toutes les sorties
+      </a>
+      <sec:authorize access="isAuthenticated()">
+        <a href="<c:url value='/createur'/>" class="nav-tile">
+          <span class="nav-tile-icon">👥</span> Créateurs &amp; sorties
+        </a>
+        <a href="<c:url value='/choix'/>" class="nav-tile">
+          <span class="nav-tile-icon">📋</span> Gérer mes sorties
+        </a>
+        <form action="<c:url value='/logout'/>" method="post" style="display:contents">
+          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}">
+          <button type="submit" class="nav-tile nav-tile-danger" style="text-align:left;cursor:pointer;">
+            <span class="nav-tile-icon">🚪</span> Se déconnecter
+          </button>
+        </form>
+      </sec:authorize>
+    </div>
 
-                <div>
-                    <label for="categorieId" class="mb-2 block text-sm font-medium text-slate-700">Catégorie</label>
-                    <select id="categorieId" name="categorieId" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none">
-                        <option value="">-- Toutes les catégories --</option>
-                        <c:forEach var="categorie" items="${categories}">
-                            <option value="${categorie.categorieID}">
-                                <c:out value="${categorie.categorieName}" />
-                            </option>
-                        </c:forEach>
-                    </select>
-                </div>
+    <!-- Search section -->
+    <div class="section-title anim anim-d3">Rechercher une sortie</div>
+    <div class="search-card anim anim-d3">
+      <form action="<c:url value='/sorties/search'/>" method="get" class="form-grid">
+        <div class="form-group">
+          <label class="form-label" for="nom">Nom de la sortie</label>
+          <input id="nom" class="form-input" type="text" name="nom" placeholder="Falaise, montagne...">
+        </div>
 
-                <div>
-                    <label for="dateSortie" class="mb-2 block text-sm font-medium text-slate-700">Date de sortie</label>
-                    <input type="date" id="dateSortie" name="dateSortie" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none">
-                </div>
-                <sec:authorize access="isAuthenticated()">
-                <div>
-                    <label for="createurId" class="mb-2 block text-sm font-medium text-slate-700">Créateur</label>
-                    <select id="createurId" name="createurId" class="w-full rounded-xl border border-slate-300 bg-white px-3 py-2 text-slate-800 focus:border-blue-500 focus:outline-none">
-                        <option value="">-- Tous les créateurs --</option>
-                        <c:forEach var="membre" items="${membres}">
-                            <option value="${membre.membreID}">
-                                <c:out value="${membre.prenom}" />
-                                <c:out value=" " />
-                                <c:out value="${membre.nom}" />
-                            </option>
-                        </c:forEach>
-                    </select>
-                </div>
-                </sec:authorize>
+        <div class="form-group">
+          <label class="form-label" for="categorieId">Catégorie</label>
+          <select id="categorieId" class="form-select" name="categorieId">
+            <option value="">— Toutes —</option>
+            <c:forEach var="cat" items="${categories}">
+              <option value="${cat.categorieID}"><c:out value="${cat.categorieName}"/></option>
+            </c:forEach>
+          </select>
+        </div>
 
-                <div class="md:col-span-2">
-                    <button type="submit" class="inline-flex items-center justify-center rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition hover:bg-blue-700">
-                        Rechercher
-                    </button>
-                </div>
-            </form>
-        </section>
-    </main>
+        <div class="form-group">
+          <label class="form-label" for="dateSortie">Date</label>
+          <input id="dateSortie" class="form-input" type="date" name="dateSortie">
+        </div>
+
+        <sec:authorize access="isAuthenticated()">
+          <div class="form-group">
+            <label class="form-label" for="createurId">Créateur</label>
+            <select id="createurId" class="form-select" name="createurId">
+              <option value="">— Tous —</option>
+              <c:forEach var="m" items="${membres}">
+                <option value="${m.membreID}"><c:out value="${m.prenom}"/> <c:out value="${m.nom}"/></option>
+              </c:forEach>
+            </select>
+          </div>
+        </sec:authorize>
+
+        <div style="grid-column: 1 / -1;">
+          <button type="submit" class="btn btn-primary">🔍 Rechercher</button>
+        </div>
+      </form>
+    </div>
+
+  </div>
 </body>
 </html>

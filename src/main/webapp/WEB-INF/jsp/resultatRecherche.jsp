@@ -1,54 +1,74 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="jakarta.tags.core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <title>Résultat de recherche</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Résultats de recherche — Club Escalade</title>
+  <link rel="stylesheet" href="<c:url value='/css/style.css'/>">
 </head>
-<body class="min-h-screen bg-slate-100 text-slate-800">
-    <main class="mx-auto max-w-5xl px-4 py-10 md:px-6">
-        <header class="mb-8 flex flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-6 shadow-sm md:flex-row md:items-center md:justify-between">
-            <h1 class="text-2xl font-extrabold text-slate-900 md:text-3xl">Résultat de la recherche</h1>
-            <a href="<c:url value='/home' />" class="inline-flex items-center rounded-xl border border-slate-300 bg-white px-4 py-2 font-medium text-slate-700 transition hover:bg-slate-50">
-                ← Retour à l'accueil
-            </a>
-        </header>
+<body>
 
-        <c:if test="${empty sorties}">
-            <div class="rounded-2xl border border-slate-200 bg-white p-6 text-center text-slate-600 shadow-sm">
-                Aucune sortie ne correspond à ce critère.
+  <nav class="navbar">
+    <a class="nav-brand" href="<c:url value='/home'/>">
+      <div class="nav-brand-icon">🧗</div>
+      Club Escalade
+    </a>
+    <div class="nav-links">
+      <a class="nav-link" href="<c:url value='/home'/>">← Retour</a>
+    </div>
+  </nav>
+
+  <div class="page">
+
+    <div class="page-header anim">
+      <div>
+        <div class="breadcrumb" style="margin-bottom:8px;">
+          <a href="<c:url value='/home'/>">Accueil</a>
+          <span class="breadcrumb-sep">›</span>
+          <span>Résultats</span>
+        </div>
+        <h1 class="page-title">Résultats de recherche</h1>
+      </div>
+      <c:if test="${not empty sorties}">
+        <div class="badge">🔍 ${sorties.size()} résultat<c:if test="${sorties.size() > 1}">s</c:if></div>
+      </c:if>
+    </div>
+
+    <c:if test="${empty sorties}">
+      <div class="empty anim">
+        <div class="empty-icon">🔍</div>
+        <div class="empty-text">Aucune sortie ne correspond à vos critères de recherche.</div>
+        <a href="<c:url value='/home'/>" class="btn btn-ghost" style="margin-top:16px;">Modifier la recherche</a>
+      </div>
+    </c:if>
+
+    <div style="display:flex;flex-direction:column;gap:10px;">
+      <c:forEach var="sortie" items="${sorties}" varStatus="st">
+        <div class="trip-manage anim" style="animation-delay:${st.index * 0.04}s">
+          <div class="trip-manage-info">
+            <div class="trip-manage-name">
+              <a href="<c:url value='/sorties/${sortie.sortieID}'/>" style="color:var(--text);">
+                <c:out value="${sortie.nomSortie}"/>
+              </a>
             </div>
-        </c:if>
+            <div class="trip-manage-detail">
+              📅 <c:out value="${sortie.dateSortie}"/> &nbsp;·&nbsp;
+              🏔️ <c:out value="${sortie.categorie.categorieName}"/>
+              <sec:authorize access="isAuthenticated()">
+                &nbsp;·&nbsp; 👤 <c:out value="${sortie.createur.prenom}"/> <c:out value="${sortie.createur.nom}"/>
+              </sec:authorize>
+            </div>
+          </div>
+          <div class="trip-manage-actions">
+            <a href="<c:url value='/sorties/${sortie.sortieID}'/>" class="btn btn-ghost btn-sm">Voir →</a>
+          </div>
+        </div>
+      </c:forEach>
+    </div>
 
-        <c:if test="${not empty sorties}">
-            <ul class="space-y-4">
-                <c:forEach var="sortie" items="${sorties}">
-                    <li class="rounded-2xl border border-slate-200 bg-white p-5 shadow-sm">
-                        <a href="<c:url value='/sorties/${sortie.sortieID}' />" class="text-lg font-semibold text-slate-900 hover:text-blue-700 hover:underline">
-                            <c:out value="${sortie.nomSortie}" />
-                        </a>
-
-                        <div class="mt-3 space-y-1 text-slate-700">
-                            <p><strong>Date :</strong> <c:out value="${sortie.dateSortie}" /></p>
-                            <p><strong>Catégorie :</strong> <c:out value="${sortie.categorie.categorieName}" /></p>
-
-                            <sec:authorize access="isAuthenticated()">
-                            <p>
-                                <strong>Créateur :</strong>
-                                <c:out value="${sortie.createur.prenom}" />
-                                <c:out value=" " />
-                                <c:out value="${sortie.createur.nom}" />
-                            </p>
-                            </sec:authorize>
-                        </div>
-                    </li>
-                </c:forEach>
-            </ul>
-        </c:if>
-    </main>
+  </div>
 </body>
 </html>
