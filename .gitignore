@@ -1,0 +1,23 @@
+### Maven ###
+target/
+!.mvn/wrapper/maven-wrapper.jar
+
+### Spring Boot ###
+*.jar
+*.war
+
+### Base de données H2 locale ###
+data/
+
+### IDE ###
+.idea/
+*.iml
+.vscode/
+.DS_Store
+
+### Logs ###
+*.log
+
+### Variables d'environnement ###
+.env
+.env.local

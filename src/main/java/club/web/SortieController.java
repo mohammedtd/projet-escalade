@@ -77,7 +77,7 @@ public class SortieController {
 
         if (membreOpt.isPresent()) {
             sortieService.quitterSortie(sortie, membreOpt.get());
-        }
+        } 
 
         return "redirect:/sorties/" + id;
     }
